@@ -101,7 +101,7 @@ const query_insert_product = (data) => {
             data.category,
             data.description,
             data.stock,
-            data.image,
+            data.image_buffer,
         ];
 
         pool.query(sql, values, (err, result) => {
