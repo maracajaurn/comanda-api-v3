@@ -1,5 +1,6 @@
 const {
     query_select_all, query_select_by_id,
+    query_select_all_from_barmen, query_select_all_from_cozinha,
     query_delete_order_by_id, query_insert_order,
     query_update_order_by_id, query_select_all_where_status,
     query_update_total_value_order_by_check_id,
@@ -33,6 +34,24 @@ class OrderService {
     async service_query_select_all_where_status(status) {
         try {
             const result = await query_select_all_where_status(status);
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_select_all_from_barmen() {
+        try {
+            const result = await query_select_all_from_barmen();
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_select_all_from_cozinha() {
+        try {
+            const result = await query_select_all_from_cozinha();
             return result;
         } catch (error) {
             throw new Error(error.message);
