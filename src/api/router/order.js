@@ -32,7 +32,30 @@ router.get("/status/:status", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
+        res.status(500).send({ message: "Erro ao buscar o pedidos.", status: false });
+    };
+});
+
+router.get("/cozinha", async (req, res) => {
+    console.log("entrou no cozinha");
+    try {
+        const result = await OrderService.service_query_select_all_from_cozinha();
+        console.log(result);
+        res.status(200).send(result);
+    } catch (err) {
+        logger.error("Error fetching order:", err);
+        res.status(500).send({ message: "Erro ao buscar o pedidos.", status: false });
+    };
+});
+
+router.get("/barmen", async (req, res) => {
+    console.log("entrou no barmen");
+    try {
+        const result = await OrderService.service_query_select_all_from_barmen();
+        res.status(200).send(result);
+    } catch (err) {
+        logger.error("Error fetching order:", err);
+        res.status(500).send({ message: "Erro ao buscar o pedidos.", status: false });
     };
 });
 
