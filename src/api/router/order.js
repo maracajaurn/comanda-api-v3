@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching orders:", err);
-        res.status(500).send({ message: "Erro ao buscar os pedidos." });
+        res.status(500).send({ message: "Erro ao buscar os pedidos.", status: false });
     };
 });
 
@@ -20,7 +20,7 @@ router.get("/:order_id", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido." });
+        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
     };
 });
 
@@ -32,7 +32,7 @@ router.get("/status/:status", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido." });
+        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
     };
 });
 
@@ -44,7 +44,7 @@ router.get("/check_id/:check_id", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido." });
+        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
     };
 });
 
@@ -54,7 +54,7 @@ router.get("/length/products_ordered", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido." });
+        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
     };
 });
 
@@ -64,7 +64,7 @@ router.get("/total_value/products_ordered", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao buscar o pedido." });
+        res.status(500).send({ message: "Erro ao buscar o pedido.", status: false });
     };
 });
 
@@ -72,10 +72,10 @@ router.post("/", async (req, res) => {
     const { list_order, check_id } = req.body;
     try {
         await OrderService.service_query_insert_order(list_order, check_id);
-        res.status(201).send({message: "Pedido criado com sucesso"});
+        res.status(201).send({ message: "Pedido criado com sucesso", status: true });
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao criar pedido." });
+        res.status(500).send({ message: "Erro ao criar pedido.", status: false });
     };
 });
 
@@ -89,10 +89,10 @@ router.put("/:order_id", async (req, res) => {
 
     try {
         await OrderService.service_query_update_order_by_id(order_id, data, check_id);
-        res.status(201).send({message: "Pedido atualizado com sucesso"});
+        res.status(201).send({ message: "Pedido atualizado com sucesso", status: true });
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao atualizar pedido." });
+        res.status(500).send({ message: "Erro ao atualizar pedido.", status: false });
     };
 });
 
@@ -102,10 +102,10 @@ router.delete("/:order_id", async (req, res) => {
 
     try {
         await OrderService.service_query_delete_order_by_id(order_id, check_id);
-        res.status(201).send({message: "Pedido deletado com sucesso"});
+        res.status(201).send({ message: "Pedido deletado com sucesso", status: true });
     } catch (err) {
         logger.error("Error fetching order:", err);
-        res.status(500).send({ message: "Erro ao deletar pedido." });
+        res.status(500).send({ message: "Erro ao deletar pedido.", status: false });
     };
 });
 

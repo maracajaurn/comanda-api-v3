@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching cashiers:", err);
-        res.status(500).send({ message: "Erro ao buscar caixas." });
+        res.status(500).send({ message: "Erro ao buscar caixas.", status: false });
     };
 });
 
@@ -20,7 +20,7 @@ router.get("/:cashier_id", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching cashier:", err);
-        res.status(500).send({ message: "Erro ao buscar caixa." });
+        res.status(500).send({ message: "Erro ao buscar caixa.", status: false });
     };
 });
 
@@ -32,17 +32,17 @@ router.get("/status/:status", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching cashier:", err);
-        res.status(500).send({ message: "Erro ao buscar caixa." });
+        res.status(500).send({ message: "Erro ao buscar caixa.", status: false });
     };
 });
 
 router.post("/", async (req, res) => {
     try {
         await CashierService.service_query_insert_cashier();
-        res.status(201).send({ message: "Caixa criado com sucesso." });
+        res.status(201).send({ message: "Caixa criado com sucesso.", status: true });
     } catch (err) {
         logger.error("Error fetching cashier:", err);
-        res.status(500).send({ message: "Erro ao criar caixa." });
+        res.status(500).send({ message: "Erro ao criar caixa.", status: false });
     };
 });
 
@@ -56,10 +56,10 @@ router.put("/:cashier_id", async (req, res) => {
 
     try {
         await CashierService.service_query_update_cashier_by_id(cashier_id, data);
-        res.status(200).send({ message: "Caixa atualizado com sucesso." });
+        res.status(200).send({ message: "Caixa atualizado com sucesso.", status: true });
     } catch (err) {
         logger.error("Error fetching cashier:", err);
-        res.status(500).send({ message: "Erro ao atualizar caixa." });
+        res.status(500).send({ message: "Erro ao atualizar caixa.", status: false });
     };
 });
 
@@ -68,10 +68,10 @@ router.delete("/:cashier_id", async (req, res) => {
 
     try {
         await CashierService.service_query_delete_cashier_by_id(cashier_id);
-        res.status(200).send({ message: "Caixa deletado com sucesso." });
+        res.status(200).send({ message: "Caixa deletado com sucesso.", status: true });
     } catch (err) {
         logger.error("Error fetching cashier:", err);
-        res.status(500).send({ message: "Erro ao deletar caixa." });
+        res.status(500).send({ message: "Erro ao deletar caixa.", status: false });
     };
 });
 

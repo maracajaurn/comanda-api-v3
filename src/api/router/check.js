@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching checks:", err);
-        res.status(500).send({ message: "Erro ao buscar comandas." });
+        res.status(500).send({ message: "Erro ao buscar comandas.", status: false });
     };
 });
 
@@ -20,7 +20,7 @@ router.get("/:check_id", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao buscar comanda." });
+        res.status(500).send({ message: "Erro ao buscar comanda.", status: false });
     };
 });
 
@@ -32,7 +32,7 @@ router.get("/status/:status", async (req, res) => {
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao buscar comandas." });
+        res.status(500).send({ message: "Erro ao buscar comandas.", status: false });
     };
 });
 
@@ -45,10 +45,10 @@ router.post("/", async (req, res) => {
 
     try {
         await CheckService.service_query_insert_check(data);
-        res.status(201).send({ message: "Comanda criada com sucesso!" });
+        res.status(201).send({ message: "Comanda criada com sucesso!", status: true });
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao criar comanda." });
+        res.status(500).send({ message: "Erro ao criar comanda.", status: false });
     };
 });
 
@@ -62,10 +62,10 @@ router.put("/:check_id", async (req, res) => {
 
     try {
         await CheckService.service_query_update_check_by_id(check_id, data);
-        res.status(200).send({ message: "Comanda atualizada com sucesso!" });
+        res.status(200).send({ message: "Comanda atualizada com sucesso!", status: true });
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao atualizar comanda." });
+        res.status(500).send({ message: "Erro ao atualizar comanda.", status: false });
     };
 });
 
@@ -74,10 +74,10 @@ router.put("/close/:check_id", async (req, res) => {
     const { pay_form } = req.body;
     try {
         await CheckService.service_query_close_check_id(pay_form, check_id);
-        res.status(200).send({ message: "Comanda fechada com sucesso!" });
+        res.status(200).send({ message: "Comanda fechada com sucesso!", status: true });
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao atualizar comanda." });
+        res.status(500).send({ message: "Erro ao atualizar comanda.", status: false });
     };
 });
 
@@ -86,10 +86,10 @@ router.delete("/:check_id", async (req, res) => {
 
     try {
         await CheckService.service_query_delete_check_by_id(check_id);
-        res.status(200).send({ message: "Comanda deletada com sucesso!" });
+        res.status(200).send({ message: "Comanda deletada com sucesso!", status: true });
     } catch (err) {
         logger.error("Error fetching check:", err);
-        res.status(500).send({ message: "Erro ao deletar comanda." });
+        res.status(500).send({ message: "Erro ao deletar comanda.", status: false });
     };
 });
 
