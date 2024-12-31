@@ -3,6 +3,7 @@ const {
     query_delete_user_by_id, query_insert_user,
     query_update_user_by_id,
 } = require("../repositores/query_user");
+const { hashSync } = require("bcrypt");
 
 class UserService {
     async service_query_select_all() {
@@ -28,6 +29,7 @@ class UserService {
 
     async service_query_insert_user(data) {
         try {
+            data.password = hashSync(data.password, 10);
             const result = await query_insert_user(data);
             return result;
         } catch (error) {
@@ -37,6 +39,7 @@ class UserService {
 
     async service_query_update_user_by_id(user_id, data) {
         try {
+            data.password = hashSync(data.password, 10);
             const user_if_exists = await query_select_by_id(user_id);
 
             if (!user_if_exists[0].user_id) {
