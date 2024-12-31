@@ -26,6 +26,7 @@ const orderRouter = require("./src/api/router/order");
 const settingRouter = require("./src/api/router/setting");
 const userRouter = require("./src/api/router/user");
 const homeRouter = require("./src/api/router/home");
+const authRouter = require("./src/api/router/auth");
 
 app.use("api/home", homeRouter)
 app.use("/api/cashier", cashierRouter);
@@ -34,6 +35,7 @@ app.use("/api/check", checkRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
 app.use("/api/setting", settingRouter);
+app.use("/api/auth", authRouter);
 
 // Eventos de WebSocket
 io.on("connection", (socket) => {
