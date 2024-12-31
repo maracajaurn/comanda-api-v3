@@ -13,8 +13,6 @@ class AuthService {
             };
 
             const isPasswordValid = compareSync(password, user.password);
-
-            console.log(isPasswordValid);
             
             if (!isPasswordValid) {
                 throw new Error("Invalid credentials");
