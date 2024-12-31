@@ -42,12 +42,12 @@ const query_insert_user = (data) => {
             (username, email, password, func)
             VALUES (?,?,?,?);`;
 
-            const values = [
-                data.username,
-                data.email,
-                data.password,
-                data.func,
-            ];
+        const values = [
+            data.username,
+            data.email,
+            data.password,
+            data.func,
+        ];
 
         pool.query(sql, values, (err, result) => {
             if (err) {
@@ -65,11 +65,11 @@ const query_update_user_by_id = (user_id, data) => {
     return new Promise((resolve, reject) => {
         const sql = `
             UPDATE comanda_menu.user u
-            SET u.username =?,
-                u.email =?,
-                u.password =?,
-                u.func =?
-            WHERE u.user_id =?;`;
+            SET u.username = ?,
+                u.email = ?,
+                u.password = ?,
+                u.func = ?
+            WHERE u.user_id = ?;`;
 
         const values = [
             data.username,
