@@ -97,6 +97,81 @@ const query_select_all_where_status = (status) => {
     });
 };
 
+const query_select_all_from_barmen = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT 
+                o.order_id,
+                c.name_client,
+                c.pay_form,
+                c.check_id,
+                p.product_id,
+                p.product_name,
+                p.category,
+                o.quantity,
+                o.status,
+                o.obs,
+                o.created_at
+            FROM comanda_menu.order as o
+            JOIN comanda_menu.check as c
+                ON c.check_id = o.check_id
+            JOIN comanda_menu.product p
+                ON p.product_id = o.product_id
+            WHERE o.status = 1
+            AND p.category = 'Drink'
+            ORDER BY o.created_at;`;
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+}
+
+const query_select_all_from_cozinha = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT 
+                o.order_id,
+                c.name_client,
+                c.pay_form,
+                c.check_id,
+                p.product_id,
+                p.product_name,
+                p.category,
+                o.quantity,
+                o.status,
+                o.obs,
+                o.created_at
+            FROM comanda_menu.order as o
+            JOIN comanda_menu.check as c
+                ON c.check_id = o.check_id
+            JOIN comanda_menu.product p
+                ON p.product_id = o.product_id
+            WHERE o.status = 1
+            AND p.category = 'Porcao'
+            OR p.category = 'Petisco'
+            OR p.category = 'Refeicao'
+            OR p.category = 'Salada'
+            ORDER BY o.created_at;`;
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+}
+
 const query_select_all_where_check_id = (check_id) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -148,7 +223,7 @@ const query_insert_order = (data) => {
             (check_id, product_id, quantity, obs)
             VALUES ${placeholders};`;
 
-            const values = data.flat();
+        const values = data.flat();
 
         pool.query(sql, values, (err, result) => {
             if (err) {
@@ -276,6 +351,8 @@ module.exports = {
     query_select_by_id,
     query_select_all_where_status,
     query_select_all_where_check_id,
+    query_select_all_from_barmen,
+    query_select_all_from_cozinha,
 
     query_insert_order,
     query_update_order_by_id,
