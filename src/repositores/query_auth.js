@@ -2,7 +2,6 @@ const pool = require("../../db/conn");
 
 const query_auth_verify_if_user_exists = (email) => {
     return new Promise((resolve, reject) => {
-        console.log(email)
         const sql = `
             SELECT * FROM comanda_menu.user u
             WHERE u.email = ?`;
