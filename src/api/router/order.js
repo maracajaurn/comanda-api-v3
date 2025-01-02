@@ -39,7 +39,6 @@ router.get("/status/:status", async (req, res) => {
 router.get("/cuisine/1", async (req, res) => {
     try {
         const result = await OrderService.service_query_select_all_from_cozinha();
-        console.log(result);
         res.status(200).send(result);
     } catch (err) {
         logger.error("Error fetching order:", err);
