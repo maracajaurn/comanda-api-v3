@@ -154,10 +154,12 @@ const query_select_all_from_cozinha = () => {
             JOIN comanda_menu.product p
                 ON p.product_id = o.product_id
             WHERE o.status = 1
-            AND p.category = 'Porcao'
-            OR p.category = 'Petisco'
-            OR p.category = 'Refeicao'
-            OR p.category = 'Salada'
+            AND (
+                p.category = 'Porcao'
+                OR p.category = 'Petisco'
+                OR p.category = 'Refeicao'
+                OR p.category = 'Salada'
+            )
             ORDER BY o.created_at;`;
 
         pool.query(sql, (err, result) => {
