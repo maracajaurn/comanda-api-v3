@@ -36,8 +36,7 @@ router.get("/status/:status", async (req, res) => {
     };
 });
 
-router.get("/cozinha", async (req, res) => {
-    console.log("entrou no cozinha");
+router.get("/cuisine/1", async (req, res) => {
     try {
         const result = await OrderService.service_query_select_all_from_cozinha();
         console.log(result);
@@ -48,8 +47,7 @@ router.get("/cozinha", async (req, res) => {
     };
 });
 
-router.get("/barmen", async (req, res) => {
-    console.log("entrou no barmen");
+router.get("/barmen/1", async (req, res) => {
     try {
         const result = await OrderService.service_query_select_all_from_barmen();
         res.status(200).send(result);
