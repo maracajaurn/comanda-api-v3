@@ -34,6 +34,7 @@ const userRouter = require("./src/api/router/user");
 const homeRouter = require("./src/api/router/home");
 const authRouter = require("./src/api/router/auth");
 
+// TODO: criar o arquivo postman das rotas
 app.use("/api", homeRouter)
 app.use("/api/cashier", cashierRouter);
 app.use("/api/product", productRouter);
