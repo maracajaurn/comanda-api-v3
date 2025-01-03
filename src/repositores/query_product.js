@@ -42,8 +42,6 @@ const query_select_by_paginated = (value) => {
                 return;
             };
 
-            console.log(result);
-
             resolve(result);
         });
     });
@@ -137,8 +135,6 @@ const query_update_product_by_id = (product_id, data) => {
             data.image_buffer,
             product_id,
         ];
-
-        console.log(values);
 
         pool.query(sql, values, (err, result) => {
             if (err) {

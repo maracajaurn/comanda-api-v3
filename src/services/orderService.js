@@ -96,8 +96,6 @@ class OrderService {
     };
 
     async service_query_delete_order_by_id(order_id, check_id) {
-
-        console.log(check_id)
         try {
             const order_if_exists = await query_select_by_id(order_id);
 
