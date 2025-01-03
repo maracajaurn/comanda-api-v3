@@ -54,6 +54,27 @@ const query_select_all_where_status = (status) => {
     });
 };
 
+const query_select_order_by_id = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT c.check_id
+            FROM comanda_menu.check c
+            ORDER BY c.check_id DESC
+            LIMIT 1;
+        `;
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 const query_insert_check = (data) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -153,9 +174,13 @@ const query_delete_check_by_id = (check_id) => {
 module.exports = {
     query_select_all,
     query_select_by_id,
+    query_select_order_by_id,
+    query_select_all_where_status,
+
     query_insert_check,
+
     query_update_check_by_id,
     query_update_close_check_by_id,
+    
     query_delete_check_by_id,
-    query_select_all_where_status
 };
