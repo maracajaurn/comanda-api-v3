@@ -44,8 +44,8 @@ router.post("/", async (req, res) => {
     };
 
     try {
-        await CheckService.service_query_insert_check(data);
-        res.status(201).send({ message: "Comanda criada com sucesso!", status: true });
+        const check_id = await CheckService.service_query_insert_check(data);
+        res.status(201).send({ message: "Comanda criada com sucesso!", status: true, check_id });
     } catch (err) {
         logger.error("Error fetching check:", err);
         res.status(500).send({ message: "Erro ao criar comanda.", status: false });
