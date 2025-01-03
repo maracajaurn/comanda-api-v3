@@ -45,11 +45,8 @@ app.use("/api/auth", authRouter);
 
 // Eventos de WebSocket
 io.on("connection", (socket) => {
-    logger.info(`Socket ${socket.id} conectado.`);
 
-    socket.on("disconnect", (reason) => {
-        logger.info(`Socket ${socket.id} desconectado. Motivo: ${reason}`);
-    });
+    socket.on("disconnect", (reason) => {});
 
     // novo pedido
     socket.on("new_order", (order) => {
