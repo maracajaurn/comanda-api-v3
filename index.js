@@ -4,7 +4,13 @@ const app = express();
 require("dotenv").config();
 
 const server = require("http").createServer(app);
-const io = require("socket.io")(server, { cors: { origin: [process.env.URL_FRONT] } });
+const io = require("socket.io")(server, {
+    cors: {
+        origin: [process.env.URL_FRONT],
+        methods: ["GET", "POST"],
+        credentials: true,
+    }
+});
 
 const cors = require("cors");
 const logger = require("./logger");
@@ -28,7 +34,7 @@ const userRouter = require("./src/api/router/user");
 const homeRouter = require("./src/api/router/home");
 const authRouter = require("./src/api/router/auth");
 
-app.use("api/home", homeRouter)
+app.use("/api", homeRouter)
 app.use("/api/cashier", cashierRouter);
 app.use("/api/product", productRouter);
 app.use("/api/check", checkRouter);
@@ -39,51 +45,51 @@ app.use("/api/auth", authRouter);
 
 // Eventos de WebSocket
 io.on("connection", (socket) => {
-    logger.info("Novo cliente conectado");
+    logger.info(`Socket ${socket.id} conectado.`);
 
-    socket.on("disconnect", () => {
-        logger.info("Cliente desconectado");
+    socket.on("disconnect", (reason) => {
+        logger.info(`Socket ${socket.id} desconectado. Motivo: ${reason}`);
     });
 
-    socket.on("novo_pedido", (pedido) => {
-        socket.data.pedido = pedido;
-        logger.info(`Novo pedido recebido: ${JSON.stringify(pedido)}`);
-        socket.broadcast.emit("lista_novo_pedido", socket.data.pedido);
+    // novo pedido
+    socket.on("new_order", (order) => {
+        socket.data.order = order;
+        socket.broadcast.emit("new_order", socket.data.order);
     });
 
-    socket.on("nova_comanda", () => {
-        logger.info("Nova comanda emitida");
-        socket.broadcast.emit("nova_comanda");
+    // nova comanda
+    socket.on("new_check", () => {
+        socket.broadcast.emit("new_check");
     });
 
-    socket.on("comanda_finalizada", (data) => {
-        socket.data.comanda_finalizada = data;
-        logger.info(`Comanda finalizada: ${JSON.stringify(data)}`);
-        socket.broadcast.emit("comanda_finalizada", socket.data.comanda_finalizada);
+    // comanda finalizada
+    socket.on("check_finished", (data) => {
+        socket.data.check_finished = data;
+        socket.broadcast.emit("check_finished", socket.data.check_finished);
     });
 
-    socket.on("produto_pronto", (data) => {
-        socket.data.produto_pronto = data;
-        logger.info(`Produto pronto: ${JSON.stringify(data)}`);
-        socket.broadcast.emit("produto_pronto", socket.data.produto_pronto);
+    // pedido pronto
+    socket.on("order_ready", (data) => {
+        socket.data.order_ready = data;
+        socket.broadcast.emit("order_ready", socket.data.order_ready);
     });
 
-    socket.on("produto_removido", (data) => {
-        socket.data.produto_removido = data;
-        logger.info(`Produto removido: ${JSON.stringify(data)}`);
-        socket.broadcast.emit("produto_removido", socket.data.produto_removido);
+    // produto removido
+    socket.on("product_removed", (data) => {
+        socket.data.product_removed = data;
+        socket.broadcast.emit("product_removed", socket.data.product_removed);
     });
 
-    socket.on("alterar_quantidade", (data) => {
-        socket.data.alterar_quantidade = data;
-        logger.info(`Quantidade alterada: ${JSON.stringify(data)}`);
-        socket.broadcast.emit("alterar_quantidade", socket.data.alterar_quantidade);
+    // quantidade alterada
+    socket.on("quantity_change", (data) => {
+        socket.data.quantity_change = data;
+        socket.broadcast.emit("quantity_change", socket.data.quantity_change);
     });
 
-    socket.on("comanda_cancelada", (data) => {
-        socket.data.comanda_cancelada = data;
-        logger.info(`Comanda cancelada: ${JSON.stringify(data)}`);
-        socket.broadcast.emit("comanda_cancelada", socket.data.comanda_cancelada);
+    // comanda cancelado
+    socket.on("check_canceled", (data) => {
+        socket.data.check_canceled = data;
+        socket.broadcast.emit("check_canceled", socket.data.check_canceled);
     });
 });
 
