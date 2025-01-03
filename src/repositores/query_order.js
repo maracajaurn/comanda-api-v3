@@ -181,6 +181,7 @@ const query_select_all_where_check_id = (check_id) => {
                 o.order_id,
                 c.name_client,
                 p.product_name,
+                p.category,
                 o.quantity,
                 o.status,
                 o.obs,
