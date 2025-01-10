@@ -9,7 +9,22 @@ const query_auth_verify_if_user_exists = (email) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(result[0]); // Retorna o usuário diretamente
+                resolve(result[0]);
+            };
+        });
+    });
+};
+
+const query_auth_verify_if_user_exists_by_id = (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT user_id FROM comanda_menu.user u
+            WHERE u.user_id = ?`;
+        pool.query(sql, [id], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result[0]);
             };
         });
     });
@@ -17,4 +32,5 @@ const query_auth_verify_if_user_exists = (email) => {
 
 module.exports = {
     query_auth_verify_if_user_exists,
+    query_auth_verify_if_user_exists_by_id
 };
