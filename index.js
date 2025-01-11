@@ -36,6 +36,9 @@ const productRouter = require("./src/api/router/products");
 const authentication = require("./src/resources/isAtuthenticaded");
 
 const isAuthenticated = async (req, res, next) => {
+    // TODO: Achar uma forma de autenticar o cliente
+    // com um token JWT sem precisar de um login
+    
     const authHeader = req.headers;
 
     const authCheck = await authentication(authHeader);
