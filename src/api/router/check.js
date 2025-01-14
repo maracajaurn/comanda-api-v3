@@ -52,6 +52,22 @@ router.post("/", async (req, res) => {
     };
 });
 
+router.post("/closed", async (req, res) => {
+    const { name_client, obs, cashier_id } = req.body;
+
+    const data = {
+        name_client, obs, cashier_id
+    };
+
+    try {
+        const check_id = await CheckService.service_query_insert_check_closed(data);
+        res.status(201).send({ message: "Comanda criada com sucesso!", status: true, check_id });
+    } catch (err) {
+        logger.error("Error fetching check:", err);
+        res.status(500).send({ message: "Erro ao criar comanda.", status: false });
+    };
+});
+
 router.put("/:check_id", async (req, res) => {
     const { check_id } = req.params;
     const { name_client, obs, total_value, status, pay_form, cashier_id } = req.body;

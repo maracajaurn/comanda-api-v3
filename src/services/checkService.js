@@ -2,7 +2,8 @@ const {
     query_select_all, query_select_by_id, query_select_order_by_id,
     query_delete_check_by_id, query_insert_check,
     query_update_check_by_id, query_update_close_check_by_id,
-    query_select_all_where_status
+    query_select_all_where_status,
+    query_insert_check_closed
 } = require("../repositores/query_check");
 
 class CheckService {
@@ -39,6 +40,17 @@ class CheckService {
     async service_query_insert_check(data) {
         try {
             await query_insert_check(data);
+            const check_id = await query_select_order_by_id();
+
+            return check_id[0].check_id;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_insert_check_closed(data) {
+        try {
+            await query_insert_check_closed(data);
             const check_id = await query_select_order_by_id();
 
             return check_id[0].check_id;

@@ -100,6 +100,31 @@ const query_insert_check = (data) => {
     });
 };
 
+const query_insert_check_closed = (data) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            INSERT INTO comanda_menu.check 
+            (name_client, obs, cashier_id, status)
+            VALUES (?,?,?, 0);`;
+
+        const values = [
+            data.name_client,
+            data.obs,
+            data.cashier_id,
+        ];
+
+        pool.query(sql, values, (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 const query_update_check_by_id = (check_id, data) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -178,6 +203,7 @@ module.exports = {
     query_select_all_where_status,
 
     query_insert_check,
+    query_insert_check_closed,
 
     query_update_check_by_id,
     query_update_close_check_by_id,
