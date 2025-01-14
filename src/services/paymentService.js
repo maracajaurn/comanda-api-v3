@@ -1,4 +1,4 @@
-const { MercadoPagoConfig, Payment, Preference } = require("mercadopago");
+const { MercadoPagoConfig, Preference } = require("mercadopago");
 const { v4: uuidv4 } = require('uuid');
 
 class PaymentService {
@@ -10,28 +10,6 @@ class PaymentService {
                 idempotencyKey: uuidv4()
             }
         });
-    };
-
-    async createPaymentPix(data) {
-        const {
-            transaction_amount,
-            description,
-            payment_method_id,
-            payer
-        } = data;
-
-        const payment = new Payment(this.client);
-
-        const body = {
-            transaction_amount,
-            description,
-            payment_method_id,
-            payer
-        };
-
-        const result = await payment.create({ body });
-
-        return result;
     };
 
     async createPayment(data) {
