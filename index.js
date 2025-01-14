@@ -33,6 +33,7 @@ const settingRouter = require("./src/api/router/setting");
 const cashierRouter = require("./src/api/router/cashier");
 const productRouter = require("./src/api/router/products");
 const paymentRouter = require("./src/api/router/payment");
+const webhook = require("./src/api/router/webhook");
 
 const authentication = require("./src/resources/isAtuthenticaded");
 
@@ -52,7 +53,6 @@ const isAuthenticated = async (req, res, next) => {
     res.status(401).send({ message: "Acesso negado. Faça login.", status: false });
 };
 
-// TODO: criar o arquivo postman das rotas
 app.use("/api", homeRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", isAuthenticated, userRouter);
@@ -62,6 +62,7 @@ app.use("/api/setting", isAuthenticated, settingRouter);
 app.use("/api/cashier", isAuthenticated, cashierRouter);
 app.use("/api/product", isAuthenticated, productRouter);
 app.use("/api/payment", isAuthenticated, paymentRouter);
+app.use("/api/webhook", webhook);
 
 // Eventos de WebSocket
 io.on("connection", (socket) => {
