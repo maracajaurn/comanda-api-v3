@@ -1,15 +1,23 @@
-const { MercadoPagoConfig, Payment, Preference } = require("mercadopago");
+const { MercadoPago, MercadoPagoConfig, Payment, Preference } = require("mercadopago");
+const { v4: uuidv4 } = require('uuid');
+
+const { query_select_by_id } = require("../repositores/query_payment");
 
 class PaymentService {
     async createPaymentPix(data) {
-        const { transaction_amount, description, payment_method_id, payer, idempotencyKey } = data;
+        const {
+            transaction_amount,
+            description,
+            payment_method_id,
+            payer
+        } = data;
 
         // TODO: Puxar o accessToken do db
         const client = new MercadoPagoConfig({
-            accessToken: '',
+            accessToken: 'TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195',
             options: {
                 timeout: 5000,
-                idempotencyKey: idempotencyKey
+                idempotencyKey: uuidv4()
             }
         });
 
@@ -22,22 +30,28 @@ class PaymentService {
             payer
         };
 
-        console.log(body);
-
         const result = await payment.create({ body });
 
         return result;
     };
 
     async createPayment(data) {
-        const { transaction_amount, description, payment_method_id, payer, back_urls, auto_return, items, idempotencyKey } = data;
+        const {
+            transaction_amount,
+            description,
+            payment_method_id,
+            payer,
+            back_urls,
+            auto_return,
+            items,
+            payment_methods
+        } = data;
 
-        // TODO: Puxar o accessToken do db
         const client = new MercadoPagoConfig({
-            accessToken: '',
+            accessToken: 'TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195',
             options: {
                 timeout: 5000,
-                idempotencyKey: idempotencyKey
+                idempotencyKey: uuidv4()
             }
         });
 
@@ -51,15 +65,18 @@ class PaymentService {
             back_urls,
             auto_return,
             items,
-            payment_methods: {
-                installments: 1,
-                default_installments: 1,
-            }
+            payment_methods
         };
 
-        console.log(body);
-
         const result = await preference.create({ body });
+
+        return result;
+    };
+
+    async getPreference(id) {
+        const client = new MercadoPagoConfig({ accessToken: "TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195" });
+        const preference = new Preference(client);
+        const result = await preference.get({ preferenceId: id });
 
         return result;
     };
