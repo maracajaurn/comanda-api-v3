@@ -1,9 +1,17 @@
-const { MercadoPago, MercadoPagoConfig, Payment, Preference } = require("mercadopago");
+const { MercadoPagoConfig, Payment, Preference } = require("mercadopago");
 const { v4: uuidv4 } = require('uuid');
 
-const { query_select_by_id } = require("../repositores/query_payment");
-
 class PaymentService {
+    constructor() {
+        this.client = new MercadoPagoConfig({
+            accessToken: '',
+            options: {
+                timeout: 5000,
+                idempotencyKey: uuidv4()
+            }
+        });
+    };
+
     async createPaymentPix(data) {
         const {
             transaction_amount,
@@ -12,16 +20,7 @@ class PaymentService {
             payer
         } = data;
 
-        // TODO: Puxar o accessToken do db
-        const client = new MercadoPagoConfig({
-            accessToken: 'TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195',
-            options: {
-                timeout: 5000,
-                idempotencyKey: uuidv4()
-            }
-        });
-
-        const payment = new Payment(client);
+        const payment = new Payment(this.client);
 
         const body = {
             transaction_amount,
@@ -47,15 +46,7 @@ class PaymentService {
             payment_methods
         } = data;
 
-        const client = new MercadoPagoConfig({
-            accessToken: 'TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195',
-            options: {
-                timeout: 5000,
-                idempotencyKey: uuidv4()
-            }
-        });
-
-        const preference = new Preference(client);
+        const preference = new Preference(this.client);
 
         const body = {
             transaction_amount,
@@ -74,8 +65,7 @@ class PaymentService {
     };
 
     async getPreference(id) {
-        const client = new MercadoPagoConfig({ accessToken: "TEST-5076250759727026-011113-ffe9adfb145ddf3f8a2aac6f0bced704-215934195" });
-        const preference = new Preference(client);
+        const preference = new Preference(this.client);
         const result = await preference.get({ preferenceId: id });
 
         return result;
