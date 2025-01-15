@@ -21,7 +21,7 @@ app.use(cors({
     origin: [process.env.URL_FRONT],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "is_client"],
 }));
 
 const homeRouter = require("./src/api/router/home");
@@ -35,17 +35,23 @@ const productRouter = require("./src/api/router/products");
 const paymentRouter = require("./src/api/router/payment");
 const webhook = require("./src/api/router/webhook");
 
-const authentication = require("./src/resources/isAtuthenticaded");
+const Authentication = require("./src/resources/isAtuthenticaded");
 
 const isAuthenticated = async (req, res, next) => {
     // TODO: Achar uma forma de autenticar o cliente
     // com um token JWT sem precisar de um login
-    
+
     const authHeader = req.headers;
 
-    const authCheck = await authentication(authHeader);
+    if (authHeader.is_client) {
+        // Liberação temporária para o cliente
 
-    if (authCheck.user_id) {
+        return next();
+    };
+
+    const authCheck = await Authentication.authenticationUser(authHeader);
+
+    if (authCheck?.user_id) {
         return next();
     };
 

@@ -31,7 +31,18 @@ class AuthService {
         };
     };
 
-    async verify(token) {
+    async verifyUser(token) {
+        try {
+            const decoded = verify(token, process.env.JWT_SECRET, { expiresIn: "1d" });
+            const result = await query_auth_verify_if_user_exists_by_id(decoded.id);
+            
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async verifyClient(token) {
         try {
             const decoded = verify(token, process.env.JWT_SECRET, { expiresIn: "1d" });
             const result = await query_auth_verify_if_user_exists_by_id(decoded.id);
