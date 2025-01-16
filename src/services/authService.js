@@ -42,12 +42,23 @@ class AuthService {
         };
     };
 
-    async verifyClient(token) {
+    async create_token_for_client (client) {
+        const token = sign({ id: client }, process.env.JWT_SECRET_CLIENT, {
+            expiresIn: "5h"
+        });
+
+        return token;
+    };
+
+    async verifyClient(token, client) {
         try {
-            const decoded = verify(token, process.env.JWT_SECRET, { expiresIn: "1d" });
-            const result = await query_auth_verify_if_user_exists_by_id(decoded.id);
+            const decoded = verify(token, process.env.JWT_SECRET_CLIENT, { expiresIn: "5h" });
+
+            if (decoded.id !== client) {
+                throw new Error("Invalid token");
+            };
             
-            return result;
+            return decoded;
         } catch (error) {
             throw new Error(error.message);
         };

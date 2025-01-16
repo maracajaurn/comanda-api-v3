@@ -13,7 +13,7 @@ class Autenticarion {
         const token = authHeader.split(" ")[1];
         
         try {
-            const result = await AuthService.verifyClient(token);
+            const result = await AuthService.verifyUser(token);
             return result;
         } catch (error) {
             logger.error("Error on verify token:", error);
@@ -22,14 +22,21 @@ class Autenticarion {
 
     async authenticationClient(headers) {
 
-        const token = headers.is_client;
-
-        if (!token) {
-            return { message: "Usuário não é um cliente.", status: false };
+        const client = headers.is_client;
+        const authHeader = headers.authorization;
+    
+        if (!client) {
+            return { message: "Cliente não informado.", status: false };
         };
 
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return { message: "Token não fornecido ou inválido.", status: false };
+        };
+
+        const token = authHeader.split(" ")[1];
+
         try {
-            const result = await AuthService.verifyUser(token);
+            const result = await AuthService.verifyClient(token, client);
             return result;
         } catch (error) {
             logger.error("Error on verify token:", error);

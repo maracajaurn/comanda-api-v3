@@ -38,18 +38,17 @@ const webhook = require("./src/api/router/webhook");
 const Authentication = require("./src/resources/isAtuthenticaded");
 
 const isAuthenticated = async (req, res, next) => {
-    // TODO: Achar uma forma de autenticar o cliente
-    // com um token JWT sem precisar de um login
+    const header = req.headers;
 
-    const authHeader = req.headers;
+    if (header.is_client) {
+        const authClient = await Authentication.authenticationClient(header);
 
-    if (authHeader.is_client) {
-        // Liberação temporária para o cliente
-
-        return next();
+        if (authClient) {
+            return next();
+        };
     };
 
-    const authCheck = await Authentication.authenticationUser(authHeader);
+    const authCheck = await Authentication.authenticationUser(header);
 
     if (authCheck?.user_id) {
         return next();
