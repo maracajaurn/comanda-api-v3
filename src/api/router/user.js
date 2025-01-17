@@ -24,7 +24,6 @@ router.get("/:user_id", async (req, res) => {
     };
 });
 
-// TODO: Criar validação para e-mail
 router.post("/", async (req, res) => {
     const { username, email, password, func } = req.body;
 
@@ -39,7 +38,6 @@ router.post("/", async (req, res) => {
     };
 });
 
-// TODO: Criar validação para e-mail
 router.put("/:user_id", async (req, res) => {
     const { user_id } = req.params;
     const { username, email, password, func } = req.body;
