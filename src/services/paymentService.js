@@ -1,10 +1,11 @@
 const { MercadoPagoConfig, Preference } = require("mercadopago");
 const { v4: uuidv4 } = require('uuid');
+require("dotenv").config();
 
 class PaymentService {
     constructor() {
         this.client = new MercadoPagoConfig({
-            accessToken: '',
+            accessToken: process.env.ACCESS_TOKEN_MERCADO_PAGO,
             options: {
                 timeout: 5000,
                 idempotencyKey: uuidv4()
