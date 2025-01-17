@@ -349,6 +349,25 @@ const query_total_value_products_ordered = () => {
     });
 };
 
+const query_update_stocl_product_by_id = (product_id, stock) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            UPDATE comanda_menu.product p
+            SET p.stock = ?
+            WHERE p.product_id = ?;`;
+
+        pool.query(sql, [stock, product_id],  (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 module.exports = {
     query_select_all,
     query_select_by_id,
@@ -363,5 +382,7 @@ module.exports = {
     query_delete_order_by_id,
 
     query_length_products_ordered,
-    query_total_value_products_ordered
+    query_total_value_products_ordered,
+
+    query_update_stocl_product_by_id,
 };
