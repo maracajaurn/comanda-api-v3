@@ -6,8 +6,8 @@ router.get("/", async (req, res) => {
     try {
         const result = await ProductService.service_query_select_all();
         res.status(200).send(result);
-    } catch (err) {
-        logger.error("Error fetching orders:", err);
+    } catch (error) {
+        logger.error("Error fetching orders:", error);
         res.status(500).send({ message: "Erro ao buscar produtos.", status: false });
     };
 });
@@ -18,8 +18,8 @@ router.get("/paginated", async (req, res) => {
     try {
         const result = await ProductService.service_query_select_by_paginated(limit, page);
         res.status(200).send(result);
-    } catch (err) {
-        logger.error("Error fetching orders:", err);
+    } catch (error) {
+        logger.error("Error fetching orders:", error);
         res.status(500).send({ message: "Erro ao buscar produtos.", status: false });
     };
 });
@@ -30,8 +30,8 @@ router.get("/:product_id", async (req, res) => {
     try {
         const result = await ProductService.service_query_select_by_id(product_id);
         res.status(200).send(result);
-    } catch (err) {
-        logger.error("Error fetching orders:", err);
+    } catch (error) {
+        logger.error("Error fetching orders:", error);
         res.status(500).send({ message: "Erro ao buscar produto.", status: false });
     };
 });
@@ -42,8 +42,8 @@ router.get("/stock/:stock", async (req, res) => {
     try {
         const result = await ProductService.service_query_select_by_stock(stock);
         res.status(200).send(result);
-    } catch (err) {
-        logger.error("Error fetching product:", err);
+    } catch (error) {
+        logger.error("Error fetching product:", error);
         res.status(500).send({ message: "Erro ao buscar produto.", status: false });
     };
 });
@@ -64,8 +64,8 @@ router.post("/", async (req, res) => {
     try {
         await ProductService.service_query_insert_product(data);
         res.status(201).send({ message: "Produto criado com sucesso.", status: true });
-    } catch (err) {
-        logger.error("Error fetching product:", err);
+    } catch (error) {
+        logger.error("Error fetching product:", error);
         res.status(500).send({ message: "Erro ao inserir produto.", status: false });
     };
 });
@@ -88,8 +88,8 @@ router.put("/:product_id", async (req, res) => {
     try {
         await ProductService.service_query_update_product_by_id(product_id, data);
         res.status(200).send({ message: "Produto atualizado com sucesso.", status: true });
-    } catch (err) {
-        logger.error("Error fetching product:", err);
+    } catch (error) {
+        logger.error("Error fetching product:", error);
         res.status(500).send({ message: "Erro ao atualizar produto.", status: false });
     };
 });
@@ -100,8 +100,8 @@ router.delete("/:product_id", async (req, res) => {
     try {
         await ProductService.service_query_delete_product_by_id(product_id);
         res.status(200).send({ message: "Produto deletado com sucesso.", status: true });
-    } catch (err) {
-        logger.error("Error fetching product:", err);
+    } catch (error) {
+        logger.error("Error fetching product:", error);
         res.status(500).send({ message: "Erro ao deletar produto.", status: false });
     };
 });

@@ -6,8 +6,8 @@ router.get("/", async (req, res) => {
     try {
         const result = await SettingService.service_query_select_all();
         res.status(200).send(result);
-    } catch (err) {
-        logger.error("Error fetching settings:", err);
+    } catch (error) {
+        logger.error("Error fetching settings:", error);
         res.status(500).send({ message: "Erro ao buscar as configurações.", status: false });
     };
 });
@@ -27,8 +27,8 @@ router.post("/", async (req, res) => {
     try {
         await SettingService.service_query_insert_setting(data);
         res.status(201).send({ message: "Configuração criada com sucesso.", status: true });
-    } catch (err) {
-        logger.error("Error fetching setting:", err);
+    } catch (error) {
+        logger.error("Error fetching setting:", error);
         res.status(500).send({ message: "Erro ao criar nova configuração.", status: false });
     };
 });
@@ -50,8 +50,8 @@ router.put("/:setting_id", async (req, res) => {
     try {
         await SettingService.service_query_update_setting_by_id(setting_id, data);
         res.status(200).send({ message: "Configuração atualizada com sucesso.", status: true });
-    } catch (err) {
-        logger.error("Error fetching setting:", err);
+    } catch (error) {
+        logger.error("Error fetching setting:", error);
         res.status(500).send({ message: "Erro ao atualizar a configuração.", status: false });
     };
 });
