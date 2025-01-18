@@ -118,10 +118,12 @@ router.put("/:order_id", async (req, res) => {
 
 router.delete("/:order_id", async (req, res) => {
     const { order_id } = req.params;
-    const { check_id } = req.query;
+    const { check_id, new_stock, product_id } = req.query;
+
+    const new_stock_quantity = [ new_stock, product_id ]
 
     try {
-        await OrderService.service_query_delete_order_by_id(order_id, check_id);
+        await OrderService.service_query_delete_order_by_id(order_id, check_id, new_stock_quantity);
         res.status(201).send({ message: "Pedido deletado com sucesso", status: true });
     } catch (error) {
         logger.error("Error fetching order:", error);
