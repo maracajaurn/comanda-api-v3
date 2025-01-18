@@ -352,8 +352,6 @@ const query_total_value_products_ordered = () => {
 
 const query_update_stock_product_by_id = (new_stock) => {
     return new Promise((resolve, reject) => {
-
-        console.log(new_stock)
         const sql = `
             UPDATE comanda_menu.product p
             SET p.stock = ?
@@ -367,8 +365,6 @@ const query_update_stock_product_by_id = (new_stock) => {
             };
 
             resolve(result);
-
-            console.log(result)
         });
     });
 };
