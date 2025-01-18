@@ -180,8 +180,10 @@ const query_select_all_where_check_id = (check_id) => {
             SELECT
                 o.order_id,
                 c.name_client,
+                p.product_id,
                 p.product_name,
                 p.category,
+                p.stock,
                 o.quantity,
                 o.status,
                 o.obs,
@@ -216,7 +218,6 @@ const query_select_all_where_check_id = (check_id) => {
 };
 
 const query_insert_order = (data) => {
-
     return new Promise((resolve, reject) => {
 
         const placeholders = data.map(() => '(?, ?, ?, ?)').join(', ');
@@ -349,14 +350,16 @@ const query_total_value_products_ordered = () => {
     });
 };
 
-const query_update_stocl_product_by_id = (product_id, stock) => {
+const query_update_stock_product_by_id = (new_stock) => {
     return new Promise((resolve, reject) => {
+
+        console.log(new_stock)
         const sql = `
             UPDATE comanda_menu.product p
             SET p.stock = ?
             WHERE p.product_id = ?;`;
 
-        pool.query(sql, [stock, product_id],  (err, result) => {
+        pool.query(sql, new_stock, (err, result) => {
             if (err) {
 
                 reject(err);
@@ -364,6 +367,8 @@ const query_update_stocl_product_by_id = (product_id, stock) => {
             };
 
             resolve(result);
+
+            console.log(result)
         });
     });
 };
@@ -384,5 +389,5 @@ module.exports = {
     query_length_products_ordered,
     query_total_value_products_ordered,
 
-    query_update_stocl_product_by_id,
+    query_update_stock_product_by_id,
 };
