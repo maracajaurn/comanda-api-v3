@@ -88,10 +88,12 @@ router.get("/total_value/products_ordered", async (req, res) => {
     };
 });
 
+// TODO: Manipular o estoque do produto
 router.post("/", async (req, res) => {
-    const { list_order, check_id } = req.body;
+    const { list_order, check_id, new_stock } = req.body;
+
     try {
-        await OrderService.service_query_insert_order(list_order, check_id);
+        await OrderService.service_query_insert_order(list_order, check_id, new_stock);
         res.status(201).send({ message: "Pedido criado com sucesso", status: true });
     } catch (error) {
         logger.error("Error fetching order:", error);
@@ -101,14 +103,12 @@ router.post("/", async (req, res) => {
 
 router.put("/:order_id", async (req, res) => {
     const { order_id } = req.params;
-    const { check_id, status, quantity, obs } = req.body;
+    const { check_id, status, quantity, obs, new_stock } = req.body;
 
-    const data = {
-        status, quantity, obs
-    };
+    const data = { status, quantity, obs };
 
     try {
-        await OrderService.service_query_update_order_by_id(order_id, data, check_id);
+        await OrderService.service_query_update_order_by_id(order_id, data, check_id, new_stock);
         res.status(201).send({ message: "Pedido atualizado com sucesso", status: true });
     } catch (error) {
         logger.error("Error fetching order:", error);
