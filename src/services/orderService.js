@@ -1,10 +1,15 @@
 const {
     query_select_all, query_select_by_id,
     query_select_all_from_barmen, query_select_all_from_cozinha,
-    query_delete_order_by_id, query_insert_order,
-    query_update_order_by_id, query_select_all_where_status,
-    query_update_total_value_order_by_check_id,
-    query_length_products_ordered, query_select_all_where_check_id,
+    query_select_all_where_status, query_select_all_where_check_id,
+
+    query_insert_order,
+    query_delete_order_by_id,
+
+    query_update_order_by_id, query_update_total_value_order_by_check_id,
+    query_update_stock_product_by_id,
+
+    query_length_products_ordered,
     query_total_value_products_ordered
 } = require("../repositores/query_order");
 
@@ -68,17 +73,25 @@ class OrderService {
         };
     };
 
-    async service_query_insert_order(data, check_id) {
+    async service_query_insert_order(data, check_id, new_stock) {
         try {
             const result = await query_insert_order(data);
+
             await query_update_total_value_order_by_check_id(check_id);
+
+            new_stock.map(async (item) => {
+                await query_update_stock_product_by_id(item);
+            });
+
             return result;
         } catch (error) {
             throw new Error(error.message);
         };
     };
 
-    async service_query_update_order_by_id(order_id, data, check_id) {
+    async service_query_update_order_by_id(order_id, data, check_id, new_stock) {
+
+        console.log(new_stock);
         try {
             const order_if_exists = await query_select_by_id(order_id);
 
@@ -87,7 +100,9 @@ class OrderService {
             };
 
             const result = await query_update_order_by_id(order_id, data);
+            
             await query_update_total_value_order_by_check_id(check_id);
+            await query_update_stock_product_by_id(new_stock);
 
             return result;
         } catch (error) {
