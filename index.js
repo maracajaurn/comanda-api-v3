@@ -45,12 +45,12 @@ const isAuthenticated = async (req, res, next) => {
         if (authClient) {
             return next();
         };
-    };
+    } else {
+        const authCheck = await Authentication.authenticationUser(header);
 
-    const authCheck = await Authentication.authenticationUser(header);
-
-    if (authCheck?.user_id) {
-        return next();
+        if (authCheck?.user_id) {
+            return next();
+        };
     };
 
     logger.error("Acesso negado. Faça login.");
