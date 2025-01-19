@@ -88,7 +88,6 @@ router.get("/total_value/products_ordered", async (req, res) => {
     };
 });
 
-// TODO: Manipular o estoque do produto
 router.post("/", async (req, res) => {
     const { list_order, check_id, new_stock } = req.body;
 
