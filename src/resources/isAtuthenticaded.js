@@ -17,6 +17,7 @@ class Autenticarion {
             return result;
         } catch (error) {
             logger.error("Error on verify token:", error);
+            return new Error("Error on verify token:", error);
         };
     };
 
@@ -40,6 +41,7 @@ class Autenticarion {
             return result;
         } catch (error) {
             logger.error("Error on verify token:", error);
+            return new Error("Error on verify token:", error);
         };
     };
 
