@@ -1,3 +1,4 @@
+const logger = require("../../logger");
 const {
     query_select_all, query_select_by_id, query_select_by_email,
     query_delete_user_by_id, query_insert_user,
@@ -31,7 +32,8 @@ class UserService {
         try {
             const check_if_email_exists = await query_select_by_email(data.email);
 
-            if (check_if_email_exists[0].email) {
+            if (check_if_email_exists[0]?.email) {
+                logger.error("email already exists.");
                 return { status: 409, message: "email already exists." };
             };
 
@@ -45,11 +47,13 @@ class UserService {
 
     async service_query_update_user_by_id(user_id, data) {
         try {
-            const check_if_email_exists = await query_select_by_email(data.email);
+            // TODO: corrigir validação de email duplicado
+            // const check_if_email_exists = await query_select_by_email(data.email);
 
-            if (check_if_email_exists[0].email) {
-                return { status: 409, message: "email already exists." };
-            };
+            // if (check_if_email_exists[0].email && check_if_email_exists[0].user_id !== 1) {
+            //     console.log(check_if_email_exists[0].email);
+            //     return { status: 409, message: "email already exists." };
+            // };
 
             data.password = hashSync(data.password, 10);
             const user_if_exists = await query_select_by_id(user_id);
