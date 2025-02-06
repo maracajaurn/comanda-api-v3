@@ -109,4 +109,14 @@ router.delete("/:check_id", async (req, res) => {
     };
 });
 
+router.delete("/delete/delete_all", async (req, res) => {
+    try {
+        await CheckService.service_query_delete_all_check();
+        res.status(200).send({ message: "Todas as comandas deletadas com sucesso!", status: true })
+    } catch (error) {
+        logger.error("Error fetching check:", error);
+        res.status(500).send({ message: "Erro ao deletar comandas.", status: false });
+    };
+});
+
 module.exports = router;

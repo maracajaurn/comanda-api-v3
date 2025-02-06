@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const logger = require("../../../logger");
 const AuthService = require("../../services/authService");
+const UserService = require("../../services/userService");
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -12,6 +13,20 @@ router.post("/login", async (req, res) => {
     } catch (error) {
         logger.error("Error on login:", error);
         return res.status(500).send({ message: "Erro ao realizar login.", status: false });
+    };
+});
+
+router.post("/first_access", async (req, res) => {
+    const { username, email, password, func } = req.body;
+
+    const data = { username, email, password, func };
+
+    try {
+        await UserService.service_query_insert_user(data);
+        res.status(201).send({ message: "Usuário criado com sucesso", status: true });
+    } catch (error) {
+        logger.error("Error on login:", error);
+        return res.status(500).send({ message: "Erro ao realizar primeiro acesso.", status: false });
     };
 });
 
