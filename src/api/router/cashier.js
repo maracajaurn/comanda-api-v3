@@ -63,6 +63,18 @@ router.put("/:cashier_id", async (req, res) => {
     };
 });
 
+router.put("/close/:cashier_id", async (req, res) => {
+    const { cashier_id } = req.params;
+
+    try {
+        await CashierService.service_query_update_close_cashier(cashier_id);
+        res.status(200).send({ message: "Caixa fechado com sucesso.", status: true });
+    } catch (error) {
+        logger.error("Error fetching cashier:", error);
+        res.status(500).send({ message: "Erro ao fechar caixa.", status: false });
+    };
+});
+
 router.delete("/:cashier_id", async (req, res) => {
     const { cashier_id } = req.params;
 

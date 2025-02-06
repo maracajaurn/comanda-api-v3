@@ -3,7 +3,7 @@ const {
     query_delete_check_by_id, query_insert_check,
     query_update_check_by_id, query_update_close_check_by_id,
     query_select_all_where_status,
-    query_insert_check_closed
+    query_insert_check_closed, query_delete_all_check
 } = require("../repositores/query_check");
 
 class CheckService {
@@ -104,6 +104,15 @@ class CheckService {
         };
     };
 
+    async service_query_delete_all_check() {
+        try {
+            const retult = await query_delete_all_check();
+
+            return retult;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
 };
 
 module.exports = new CheckService();

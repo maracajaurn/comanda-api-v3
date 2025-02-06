@@ -196,6 +196,22 @@ const query_delete_check_by_id = (check_id) => {
     });
 };
 
+const query_delete_all_check = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `DELETE FROM comanda_menu.check`;
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 module.exports = {
     query_select_all,
     query_select_by_id,
@@ -209,4 +225,5 @@ module.exports = {
     query_update_close_check_by_id,
     
     query_delete_check_by_id,
+    query_delete_all_check,
 };
