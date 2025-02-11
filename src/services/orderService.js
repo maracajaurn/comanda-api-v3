@@ -100,8 +100,11 @@ class OrderService {
             const result = await query_update_order_by_id(order_id, data);
 
             await query_update_total_value_order_by_check_id(check_id);
-            await query_update_stock_product_by_id(new_stock);
 
+            if (new_stock) {
+                await query_update_stock_product_by_id(new_stock);
+            };
+            
             return result;
         } catch (error) {
             throw new Error(error.message);
