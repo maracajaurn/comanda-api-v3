@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  backend:
+    image: jackssads/comanda_back:1.0
+    environment:
+      - PORT_BACK=3001
+      - URL_FRONT=https://
+      - JWT_SECRET=
+      - JWT_SECRET_CLIENT=
+      - NODE_ENV=
+      - SESSION_SECRET=
+      - ACCESS_TOKEN_MERCADO_PAGO=
+      - CONNECTION_LIMIT=10
+      - HOST=mysql
+      - USER=root
+      - PASSWORD=
+      - DATABASE=
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`avante.adaupsoft.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.backend.loadbalancer.server.port=3001"
+    networks:
+      - network_public
+    ports:
+      - "3001:3001"
+
+  frontend:
+    image: jackssads/comanda_front:1.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`avante.adaupsoft.com`) && PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls=true"
+      - "traefik.http.routers.frontend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+    depends_on:
+      - backend
+    networks:
+      - network_public
+    ports:
+    - "3000:3000"
+
+volumes:
+  mysql_data:
+
+networks:
+  network_public:
+    external: true
+    name: network_public
