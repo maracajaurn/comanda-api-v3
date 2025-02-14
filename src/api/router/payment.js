@@ -16,11 +16,11 @@ router.post("/process_payment", async (req, res) => {
     }
 });
 
-router.post("/get_preference", async (req, res) => {
-    const { preference_id } = req.body;
+router.post("/payment_status", async (req, res) => {
+    const { payment_id } = req.body;
 
     try {
-        const result = await PaymentService.getPreference(preference_id);
+        const result = await PaymentService.getPreference(payment_id);
 
         res.status(200).send(result);
     } catch (error) {

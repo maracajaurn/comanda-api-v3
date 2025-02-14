@@ -1,4 +1,4 @@
-const { MercadoPagoConfig, Preference } = require("mercadopago");
+const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
 
@@ -14,38 +14,17 @@ class PaymentService {
     };
 
     async createPayment(data) {
-        const {
-            transaction_amount,
-            description,
-            payment_method_id,
-            payer,
-            back_urls,
-            auto_return,
-            items,
-            payment_methods
-        } = data;
-
         const preference = new Preference(this.client);
 
-        const body = {
-            transaction_amount,
-            description,
-            payment_method_id,
-            payer,
-            back_urls,
-            auto_return,
-            items,
-            payment_methods
-        };
-
-        const result = await preference.create({ body });
+        const result = await preference.create({ body: data });
 
         return result;
     };
 
-    async getPreference(id) {
-        const preference = new Preference(this.client);
-        const result = await preference.get({ preferenceId: id });
+    async getPreference(payment_id) {
+        const preference = new Payment(this.client)
+
+        const result = await preference.get({ id: payment_id });
 
         return result;
     };
