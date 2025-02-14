@@ -42,7 +42,7 @@ const isAuthenticated = async (req, res, next) => {
     if (header.is_client) {
         const authClient = await Authentication.authenticationClient(header);
 
-        if (authClient) {
+        if (authClient?.status) {
             return next();
         };
     } else {
