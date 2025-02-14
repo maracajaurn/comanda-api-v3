@@ -66,13 +66,14 @@ const query_select_by_id = (product_id) => {
     });
 };
 
-const query_select_by_stock = (status) => {
+const query_select_by_stock = (stock) => {
     return new Promise((resolve, reject) => {
-        const value = status === "1" ? ">" : "=";
+        const value = stock === "1" ? ">" : "=";
         const sql = `
             SELECT *
             FROM comanda_menu.product p
-            WHERE p.stock ${value} 0`;
+            WHERE p.stock ${value} 0
+            ORDER BY p.product_name`;
 
         pool.query(sql, (err, result) => {
             if (err) {
