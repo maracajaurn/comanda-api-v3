@@ -36,7 +36,6 @@ class Autenticarion {
 
         try {
             const result = await AuthService.verifyClient(token, client);
-            console.log(result)
             return result?.id ? { status: true, client: result } : { status: false };
         } catch (error) {
             logger.error("Error on verify token:", error);
