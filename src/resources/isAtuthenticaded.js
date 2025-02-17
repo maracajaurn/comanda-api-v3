@@ -13,7 +13,7 @@ class Autenticarion {
 
         try {
             const result = await AuthService.verifyUser(token);
-            return result?.user_id ? { status: true, user: result } : { status: false };
+            return result?.user_id ? { status: true, user_id:result.user_id } : { status: false };
         } catch (error) {
             logger.error("Error on verify token:", error);
             return { message: "Erro na autenticação.", status: false };
@@ -36,7 +36,8 @@ class Autenticarion {
 
         try {
             const result = await AuthService.verifyClient(token, client);
-            return result?.status ? { status: true, client: result } : { status: false };
+            console.log(result)
+            return result?.id ? { status: true, client: result } : { status: false };
         } catch (error) {
             logger.error("Error on verify token:", error);
             return { message: "Erro na autenticação.", status: false };
