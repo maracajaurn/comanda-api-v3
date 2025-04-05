@@ -3,7 +3,15 @@ const pool = require("../../db/conn");
 const query_select_all = () => {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT *
+            SELECT 
+                p.product_id,
+                p.product_name,
+                p.price,
+                p.category,
+                p.description,
+                p.stock,
+                p.created_at,
+                p.updated_at
             FROM comanda_menu.product p
             ORDER BY p.product_name;`;
 
@@ -70,7 +78,13 @@ const query_select_by_stock = (stock) => {
     return new Promise((resolve, reject) => {
         const value = stock === "1" ? ">" : "=";
         const sql = `
-            SELECT *
+            SELECT 
+                p.product_id,
+                p.product_name,
+                p.price,
+                p.category,
+                p.description,
+                p.stock
             FROM comanda_menu.product p
             WHERE p.stock ${value} 0
             ORDER BY p.product_name`;
