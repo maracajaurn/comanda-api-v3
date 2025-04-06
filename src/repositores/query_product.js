@@ -40,6 +40,7 @@ const query_select_by_paginated = (value) => {
                 p.image,
                 (SELECT COUNT(*) FROM comanda_menu.product) AS total_products
             FROM comanda_menu.product p
+            WHERE stock > 0 
             ORDER BY p.product_name
             LIMIT ? OFFSET ?;`;
 
