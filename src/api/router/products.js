@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
 
     let image_buffer = null;
     if (image) {
-        const base64Data = image.replace(/^data:image\/(png|jpeg);base64,/, "");
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
         image_buffer = Buffer.from(base64Data, 'base64');
     };
 
@@ -77,7 +77,8 @@ router.put("/:product_id", async (req, res) => {
 
     let image_buffer = null;
     if (image) {
-        const base64Data = image.replace(/^data:image\/(png|jpeg);base64,/, "");
+        console.log(image);
+        const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
         image_buffer = Buffer.from(base64Data, 'base64');
     };
 
