@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
     const { name_client, obs, cashier_id } = req.body;
 
     const data = {
-        name_client, obs, cashier_id
+        name_client, obs, cashier_id, created_for: 0
     };
 
     try {
@@ -56,7 +56,7 @@ router.post("/closed", async (req, res) => {
     const { name_client, obs, cashier_id } = req.body;
 
     const data = {
-        name_client, obs, cashier_id
+        name_client, obs, cashier_id, status: 0, created_for: 1
     };
 
     try {

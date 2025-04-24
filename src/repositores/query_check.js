@@ -79,13 +79,14 @@ const query_insert_check = (data) => {
     return new Promise((resolve, reject) => {
         const sql = `
             INSERT INTO comanda_menu.check 
-            (name_client, obs, cashier_id)
-            VALUES (?,?,?);`;
+            (name_client, obs, cashier_id, created_for)
+            VALUES (?,?,?,?);`;
 
         const values = [
             data.name_client,
             data.obs,
             data.cashier_id,
+            data.created_for,
         ];
 
         pool.query(sql, values, (err, result) => {
@@ -104,13 +105,15 @@ const query_insert_check_closed = (data) => {
     return new Promise((resolve, reject) => {
         const sql = `
             INSERT INTO comanda_menu.check 
-            (name_client, obs, cashier_id, status)
-            VALUES (?,?,?, 0);`;
+            (name_client, obs, cashier_id, status, created_for)
+            VALUES (?,?,?,?,?);`;
 
         const values = [
             data.name_client,
             data.obs,
             data.cashier_id,
+            data.status,
+            data.created_for,
         ];
 
         pool.query(sql, values, (err, result) => {
