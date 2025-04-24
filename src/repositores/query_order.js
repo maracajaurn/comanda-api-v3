@@ -105,6 +105,7 @@ const query_select_all_from_barmen = () => {
                 c.name_client,
                 c.pay_form,
                 c.check_id,
+                c.created_for,
                 p.product_id,
                 p.product_name,
                 p.category,
@@ -141,6 +142,7 @@ const query_select_all_from_cozinha = () => {
                 c.name_client,
                 c.pay_form,
                 c.check_id,
+                c.created_for,
                 p.product_id,
                 p.product_name,
                 p.category,
@@ -155,10 +157,7 @@ const query_select_all_from_cozinha = () => {
                 ON p.product_id = o.product_id
             WHERE o.status = 1
             AND (
-                p.category = 'Porcao'
-                OR p.category = 'Petisco'
-                OR p.category = 'Refeicao'
-                OR p.category = 'Salada'
+                p.category IN ('Porcao', 'Petisco', 'Refeicao', 'Salada')
             )
             ORDER BY o.created_at;`;
 
