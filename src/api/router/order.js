@@ -56,6 +56,16 @@ router.get("/barmen/1", async (req, res) => {
     };
 });
 
+router.get("/list/check/created_online", async (req, res) => {
+    try {
+        const result = await OrderService.service_query_select_all_created_online();
+        res.status(200).send(result);
+    } catch (error) {
+        logger.error("Error fetching check:", error);
+        res.status(500).send({ message: "Erro ao buscar comandas.", status: false });
+    };
+});
+
 router.get("/check_id/:check_id", async (req, res) => {
     const { check_id } = req.params;
 

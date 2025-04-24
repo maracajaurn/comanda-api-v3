@@ -119,6 +119,7 @@ const query_select_all_from_barmen = () => {
             JOIN comanda_menu.product p
                 ON p.product_id = o.product_id
             WHERE o.status = 1
+            AND c.created_for = 0
             AND p.category = 'Drink'
             ORDER BY o.created_at;`;
 
@@ -156,6 +157,7 @@ const query_select_all_from_cozinha = () => {
             JOIN comanda_menu.product p
                 ON p.product_id = o.product_id
             WHERE o.status = 1
+            AND c.created_for = 0
             AND (
                 p.category IN ('Porcao', 'Petisco', 'Refeicao', 'Salada')
             )
@@ -207,6 +209,42 @@ const query_select_all_where_check_id = (check_id) => {
         pool.query(sql, [check_id], (err, result) => {
             if (err) {
 
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
+const query_select_all_created_online = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT 
+                o.order_id,
+                c.name_client,
+                c.pay_form,
+                c.check_id,
+                c.created_for,
+                p.product_id,
+                p.product_name,
+                p.category,
+                o.quantity,
+                o.status,
+                o.obs,
+                o.created_at
+            FROM comanda_menu.order as o
+            JOIN comanda_menu.check as c
+                ON c.check_id = o.check_id
+            JOIN comanda_menu.product p
+                ON p.product_id = o.product_id
+            WHERE o.status = 1
+            AND c.created_for = 1
+            ORDER BY o.created_at;`
+
+        pool.query(sql, (err, result) => {
+            if (err) {
                 reject(err);
                 return;
             };
@@ -373,6 +411,7 @@ module.exports = {
     query_select_by_id,
     query_select_all_where_status,
     query_select_all_where_check_id,
+    query_select_all_created_online,
     query_select_all_from_barmen,
     query_select_all_from_cozinha,
 

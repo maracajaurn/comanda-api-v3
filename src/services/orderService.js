@@ -1,5 +1,5 @@
 const {
-    query_select_all, query_select_by_id,
+    query_select_all, query_select_by_id, query_select_all_created_online,
     query_select_all_from_barmen, query_select_all_from_cozinha,
     query_select_all_where_status, query_select_all_where_check_id,
 
@@ -67,6 +67,15 @@ class OrderService {
         try {
             await query_update_total_value_order_by_check_id(check_id);
             const result = await query_select_all_where_check_id(check_id);
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_select_all_created_online() {
+        try {
+            const result = await query_select_all_created_online();
             return result;
         } catch (error) {
             throw new Error(error.message);
