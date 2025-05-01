@@ -7,22 +7,22 @@ const query_select_all = () => {
                 p.product_id,
                 p.product_name,
                 p.price,
-                p.category_id,
                 c.name_category,
+                c.screen,
                 p.description,
                 p.stock,
                 p.created_at,
                 p.updated_at
             FROM comanda_menu.product p
             JOIN comanda_menu.category c
-            ON p.category_id = c.category_id
+                ON p.category_id = c.category_id
             ORDER BY p.product_name;`;
 
         pool.query(sql, (err, result) => {
             if (err) {
                 
                 reject(err);
-                return;''
+                return;
             };
 
             resolve(result);
@@ -45,7 +45,7 @@ const query_select_by_paginated = (value) => {
                 (SELECT COUNT(*) FROM comanda_menu.product) AS total_products
             FROM comanda_menu.product p
             JOIN comanda_menu.category c
-            ON p.category_id = c.category_id
+                ON p.category_id = c.category_id
             WHERE stock > 0 
             ORDER BY p.product_name
             LIMIT ? OFFSET ?;`;
@@ -68,7 +68,7 @@ const query_select_by_id = (product_id) => {
             SELECT * 
             FROM comanda_menu.product p
             JOIN comanda_menu.category c
-            ON p.category_id = c.category_id
+                ON p.category_id = c.category_id
             WHERE p.product_id =?;`;
 
         pool.query(sql, [product_id], (err, result) => {
@@ -90,13 +90,13 @@ const query_select_by_stock = (stock) => {
             SELECT 
                 p.product_id,
                 p.product_name,
-                p.category_id,
-                c.name_category,
+                p.stock,
                 p.description,
-                p.stock
+                c.name_category,
+                c.screen
             FROM comanda_menu.product p
             JOIN comanda_menu.category c
-            ON p.category_id = c.category_id
+                ON p.category_id = c.category_id
             WHERE p.stock ${value} 0
             ORDER BY p.product_name`;
 

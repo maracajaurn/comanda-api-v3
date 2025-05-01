@@ -102,25 +102,25 @@ const query_select_all_from_barmen = () => {
         const sql = `
             SELECT 
                 o.order_id,
-                c.name_client,
-                c.pay_form,
-                c.check_id,
-                c.created_for,
-                p.product_id,
-                p.product_name,
-                p.category,
                 o.quantity,
                 o.status,
                 o.obs,
-                o.created_at
+                o.created_at,
+                c.name_client,
+                c.check_id,
+                c.created_for,
+                p.product_id,
+                p.product_name
             FROM comanda_menu.order as o
             JOIN comanda_menu.check as c
                 ON c.check_id = o.check_id
             JOIN comanda_menu.product p
                 ON p.product_id = o.product_id
+            JOIN comanda_menu.category ct
+                ON p.category_id = ct.category_id
             WHERE o.status = 1
             AND c.created_for = 0
-            AND p.category = 'Drink'
+            AND ct.screen = "bar"
             ORDER BY o.created_at;`;
 
         pool.query(sql, (err, result) => {
@@ -140,27 +140,25 @@ const query_select_all_from_cozinha = () => {
         const sql = `
             SELECT 
                 o.order_id,
-                c.name_client,
-                c.pay_form,
-                c.check_id,
-                c.created_for,
-                p.product_id,
-                p.product_name,
-                p.category,
                 o.quantity,
                 o.status,
                 o.obs,
-                o.created_at
+                o.created_at,
+                c.name_client,
+                c.check_id,
+                c.created_for,
+                p.product_id,
+                p.product_name
             FROM comanda_menu.order as o
             JOIN comanda_menu.check as c
                 ON c.check_id = o.check_id
             JOIN comanda_menu.product p
                 ON p.product_id = o.product_id
+            JOIN comanda_menu.category ct
+                ON p.category_id = ct.category_id
             WHERE o.status = 1
             AND c.created_for = 0
-            AND (
-                p.category IN ('Porcao', 'Petisco', 'Refeicao', 'Salada')
-            )
+            AND ct.screen = "churrasco"
             ORDER BY o.created_at;`;
 
         pool.query(sql, (err, result) => {
@@ -183,19 +181,21 @@ const query_select_all_where_check_id = (check_id) => {
                 c.name_client,
                 p.product_id,
                 p.product_name,
-                p.category,
                 p.stock,
                 o.quantity,
                 o.status,
                 o.obs,
                 o.created_at,
                 c.pay_form,
+                ct.screen,
                 SUM(p.price * o.quantity) AS total_price
             FROM comanda_menu.check AS c
             JOIN comanda_menu.order AS o
                 ON c.check_id = o.check_id
             JOIN comanda_menu.product AS p
                 ON p.product_id = o.product_id
+            JOIN comanda_menu.category ct
+                ON p.category_id = ct.category_id
             WHERE c.check_id = ?
             GROUP BY
                 o.order_id,
