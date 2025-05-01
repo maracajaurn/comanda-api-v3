@@ -33,6 +33,7 @@ const settingRouter = require("./src/api/router/setting");
 const cashierRouter = require("./src/api/router/cashier");
 const productRouter = require("./src/api/router/products");
 const paymentRouter = require("./src/api/router/payment");
+const categoryRouter = require("./src/api/router/category");
 
 const Authentication = require("./src/resources/isAtuthenticaded");
 
@@ -67,6 +68,7 @@ app.use("/api/setting", isAuthenticated, settingRouter);
 app.use("/api/cashier", isAuthenticated, cashierRouter);
 app.use("/api/product", isAuthenticated, productRouter);
 app.use("/api/payment", isAuthenticated, paymentRouter);
+app.use("/api/category", isAuthenticated, categoryRouter);
 
 // Eventos de WebSocket
 io.on("connection", (socket) => {
