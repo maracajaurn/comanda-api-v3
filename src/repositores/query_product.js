@@ -7,19 +7,22 @@ const query_select_all = () => {
                 p.product_id,
                 p.product_name,
                 p.price,
-                p.category,
+                p.category_id,
+                c.name_category,
                 p.description,
                 p.stock,
                 p.created_at,
                 p.updated_at
             FROM comanda_menu.product p
+            JOIN comanda_menu.category c
+            ON p.category_id = c.category_id
             ORDER BY p.product_name;`;
 
         pool.query(sql, (err, result) => {
             if (err) {
                 
                 reject(err);
-                return;
+                return;''
             };
 
             resolve(result);
@@ -34,12 +37,15 @@ const query_select_by_paginated = (value) => {
                 p.product_id,
 	            p.product_name,
 	            p.price,
-	            p.category,
+	            p.category_id,
+                c.name_category,
                 p.description,
                 p.stock,
                 p.image,
                 (SELECT COUNT(*) FROM comanda_menu.product) AS total_products
             FROM comanda_menu.product p
+            JOIN comanda_menu.category c
+            ON p.category_id = c.category_id
             WHERE stock > 0 
             ORDER BY p.product_name
             LIMIT ? OFFSET ?;`;
@@ -61,6 +67,8 @@ const query_select_by_id = (product_id) => {
         const sql = `
             SELECT * 
             FROM comanda_menu.product p
+            JOIN comanda_menu.category c
+            ON p.category_id = c.category_id
             WHERE p.product_id =?;`;
 
         pool.query(sql, [product_id], (err, result) => {
@@ -82,11 +90,13 @@ const query_select_by_stock = (stock) => {
             SELECT 
                 p.product_id,
                 p.product_name,
-                p.price,
-                p.category,
+                p.category_id,
+                c.name_category,
                 p.description,
                 p.stock
             FROM comanda_menu.product p
+            JOIN comanda_menu.category c
+            ON p.category_id = c.category_id
             WHERE p.stock ${value} 0
             ORDER BY p.product_name`;
 
@@ -106,13 +116,13 @@ const query_insert_product = (data) => {
     return new Promise((resolve, reject) => {
         const sql = `
             INSERT INTO comanda_menu.product 
-            (product_name, price, category, description, stock, image)
+            (product_name, price, category_id, description, stock, image)
             VALUES (?,?,?,?,?,?);`;
 
         const values = [
             data.product_name,
             data.price,
-            data.category,
+            data.category_id,
             data.description,
             data.stock,
             data.image_buffer,
@@ -136,7 +146,7 @@ const query_update_product_by_id = (product_id, data) => {
             UPDATE comanda_menu.product p
             SET product_name = ?,
                 p.price = ?,
-                p.category = ?,
+                p.category_id = ?,
                 p.description = ?,
                 p.stock = ?,
                 p.image = ?
@@ -145,12 +155,14 @@ const query_update_product_by_id = (product_id, data) => {
         const values = [
             data.product_name,
             data.price,
-            data.category,
+            data.category_id,
             data.description,
             data.stock,
             data.image_buffer,
             product_id,
         ];
+
+        console.log(values)
 
         pool.query(sql, values, (err, result) => {
             if (err) {

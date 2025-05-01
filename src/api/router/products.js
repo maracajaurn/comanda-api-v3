@@ -49,7 +49,7 @@ router.get("/stock/:stock", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const { product_name, price, category, description, stock, image } = req.body;
+    const { product_name, price, category_id, description, stock, image } = req.body;
 
     let image_buffer = null;
     if (image) {
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
     };
 
     const data = {
-        product_name, price, category, description, stock, image_buffer
+        product_name, price, category_id, description, stock, image_buffer
     };
 
     try {
@@ -72,18 +72,17 @@ router.post("/", async (req, res) => {
 
 router.put("/:product_id", async (req, res) => {
     const { product_id } = req.params;
-    const { product_name, price, category, description, stock, image } = req.body;
+    const { product_name, price, category_id, description, stock, image } = req.body;
 
 
     let image_buffer = null;
     if (image) {
-        console.log(image);
         const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
         image_buffer = Buffer.from(base64Data, 'base64');
     };
 
     const data = {
-        product_name, price, category, description, stock, image_buffer
+        product_name, price, category_id, description, stock, image_buffer
     };
 
     try {
