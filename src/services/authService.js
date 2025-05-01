@@ -44,7 +44,7 @@ class AuthService {
 
     async create_token_for_client (client) {
         const token = sign({ id: client }, process.env.JWT_SECRET_CLIENT, {
-            expiresIn: "5h"
+            expiresIn: "12h"
         });
 
         return token;
@@ -52,7 +52,7 @@ class AuthService {
 
     async verifyClient(token, client) {
         try {
-            const decoded = verify(token, process.env.JWT_SECRET_CLIENT, { expiresIn: "5h" });
+            const decoded = verify(token, process.env.JWT_SECRET_CLIENT, { expiresIn: "12h" });
 
             if (decoded.id !== client) {
                 throw new Error("Invalid token");
