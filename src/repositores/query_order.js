@@ -229,7 +229,6 @@ const query_select_all_created_online = () => {
                 c.created_for,
                 p.product_id,
                 p.product_name,
-                p.category,
                 o.quantity,
                 o.status,
                 o.obs,
