@@ -55,7 +55,7 @@ const query_insert_category = (data) => {
     });
 };
 
-const query_update_category = (data) => {
+const query_update_category = (id, data) => {
     return new Promise((resolve, reject) => {
         const sql = `
             UPDATE
@@ -66,7 +66,7 @@ const query_update_category = (data) => {
         const value = [
             data.name_category,
             data.screen,
-            data.id
+            id
         ];
 
         pool.query(sql, value, (err, result) => {
