@@ -1,7 +1,9 @@
 const {
-    query_select_all, query_select_by_paginated, query_select_by_id,
-    query_delete_product_by_id, query_insert_product,
-    query_update_product_by_id, query_select_by_stock
+    query_select_all, query_select_by_paginated,
+    query_select_by_id, query_select_by_stock, query_select_by_name,
+    query_insert_product,
+    query_delete_product_by_id, 
+    query_update_product_by_id, 
 } = require("../repositores/query_product");
 
 class ProductService {
@@ -40,6 +42,15 @@ class ProductService {
     async service_query_select_by_stock(status) {
         try {
             const result = await query_select_by_stock(status);
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_select_by_name(name_product) {
+        try {
+            const result = await query_select_by_name(name_product);
             return result;
         } catch (error) {
             throw new Error(error.message);

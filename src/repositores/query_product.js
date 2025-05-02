@@ -112,6 +112,35 @@ const query_select_by_stock = (stock) => {
     });
 };
 
+const query_select_by_name = (name_product) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT 
+                p.product_id,
+                p.product_name,
+                p.stock,
+                p.description,
+                p.price,
+                p.image
+            FROM comanda_menu.product p
+            JOIN comanda_menu.category c
+                ON p.category_id = c.category_id
+            WHERE p.stock > 0
+            AND p.product_name LIKE "%${name_product}%"
+            ORDER BY p.product_name`;
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 const query_insert_product = (data) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -198,6 +227,7 @@ module.exports = {
     query_select_all,
     query_select_by_paginated,
     query_select_by_stock,
+    query_select_by_name,
     query_select_by_id,
     query_update_product_by_id,
     query_insert_product,

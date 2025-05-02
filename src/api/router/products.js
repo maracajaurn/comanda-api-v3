@@ -48,6 +48,20 @@ router.get("/stock/:stock", async (req, res) => {
     };
 });
 
+router.get("/get_product/by_name", async (req, res) => {
+    const { name_product } = req.query;
+
+    console.log("name_product", name_product)
+
+    try {
+        const result = await ProductService.service_query_select_by_name(name_product);
+        res.status(200).send(result);
+    } catch (error) {
+        logger.error("Error fetching product:", error);
+        res.status(500).send({ message: "Erro ao buscar produto." });
+    };
+});
+
 router.post("/", async (req, res) => {
     const { product_name, price, category_id, description, stock, image } = req.body;
 
