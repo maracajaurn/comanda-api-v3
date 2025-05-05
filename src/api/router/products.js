@@ -51,8 +51,6 @@ router.get("/stock/:stock", async (req, res) => {
 router.get("/get_product/by_name", async (req, res) => {
     const { name_product } = req.query;
 
-    console.log("name_product", name_product)
-
     try {
         const result = await ProductService.service_query_select_by_name(name_product);
         res.status(200).send(result);

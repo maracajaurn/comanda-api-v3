@@ -191,8 +191,6 @@ const query_update_product_by_id = (product_id, data) => {
             product_id,
         ];
 
-        console.log(values)
-
         pool.query(sql, values, (err, result) => {
             if (err) {
                 
