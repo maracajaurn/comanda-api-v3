@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 const path = require("path");
-const serviceAccount = require(path.join(__dirname, "../../notify-comanda-avante-firebase-adminsdk-fbsvc-543c2eae97.json"));
+const serviceAccount = require(path.join(__dirname, "../../notify-comanda-avante-firebase-adminsdk.json"));
 
 class NotificationService {
     constructor() {
