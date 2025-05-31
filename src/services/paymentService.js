@@ -15,7 +15,7 @@ class PaymentService {
 
     async createPayment(data) {
         const payment = new Payment(this.client);
-        const result = await payment.create({ body: data });
+        const result = await payment.create({ body: data, requestOptions: { Options: uuidv4() } });
         return result;
     };
 
