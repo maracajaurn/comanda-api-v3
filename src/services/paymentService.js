@@ -19,7 +19,7 @@ class PaymentService {
         return result;
     };
 
-    async getPreference(id) {
+    async getPayment(id) {
         const payment = new Payment(this.client)
         const result = await payment.get({ id });
         return result;
