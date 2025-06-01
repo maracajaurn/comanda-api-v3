@@ -40,6 +40,24 @@
 					"response": []
 				},
 				{
+					"name": "/ :cashier_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cashier/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cashier",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/status/:status",
 					"request": {
 						"method": "GET",
@@ -114,24 +132,6 @@
 				{
 					"name": "/ :cashier_id",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/cashier/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"cashier",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/ :cashier_id",
-					"request": {
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -180,17 +180,29 @@
 				},
 				{
 					"name": "/:check_id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/check/12",
+							"raw": "{{base_url}}/check/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"check",
-								"12"
+								"1"
 							]
 						}
 					},
@@ -202,14 +214,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/check/status/0",
+							"raw": "{{base_url}}/check/status/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"check",
 								"status",
-								"0"
+								"1"
 							]
 						}
 					},
@@ -326,13 +338,19 @@
 			]
 		},
 		{
-			"name": "order",
+			"name": "Order",
 			"item": [
 				{
 					"name": "/",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "is_client",
+								"value": "Jack",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{base_url}}/order",
 							"host": [
@@ -568,11 +586,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/order/list/check/created_online",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/order/list/check/created_online",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"order",
+								"list",
+								"check",
+								"created_online"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "product",
+			"name": "Product",
 			"item": [
 				{
 					"name": "/",
@@ -597,13 +635,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/product/1",
+							"raw": "{{base_url}}/product/10",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"product",
-								"1"
+								"10"
 							]
 						}
 					},
@@ -634,13 +672,51 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/product/paginated",
+							"raw": "{{base_url}}/product/paginated?limit=10&page=1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"product",
 								"paginated"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/product/paginated Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/product/paginated?limit=10&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"product",
+								"paginated"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -720,7 +796,7 @@
 			]
 		},
 		{
-			"name": "user",
+			"name": "User",
 			"item": [
 				{
 					"name": "/",
@@ -831,7 +907,7 @@
 			]
 		},
 		{
-			"name": "setting",
+			"name": "Setting",
 			"item": [
 				{
 					"name": "/",
@@ -969,7 +1045,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"client\": \"\"\r\n}",
+							"raw": "{\r\n    \"client\": \"Jack\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -984,6 +1060,126 @@
 							"path": [
 								"auth",
 								"create_token_for_client"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/category/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_category\": \"Churrascos\",\r\n    \"screen\": \"churrasco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name_category\": \"Churrascos\",\r\n    \"screen\": \"churrasco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/category/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/category/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"category",
+								"2"
 							]
 						}
 					},
@@ -1008,7 +1204,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"transaction_amount,\": 10,\r\n    \"description,\": \"\",\r\n    \"payment_method_id,\": \"pix\",\r\n    \"payer,\": \"Jack\",\r\n    \"back_urls,\": \"\",\r\n    \"auto_return,\": \"\",\r\n    \"items,\": \"\",\r\n    \"payment_methods\": \"pix\"\r\n}",
+							"raw": "{\r\n    \"transaction_amount,\": 10,\r\n    \"description,\": \"Teste\",\r\n    \"payment_method_id,\": \"pix\",\r\n    \"payer,\": \"Jack\",\r\n    \"back_urls,\": {\r\n        \"success\": \"http://localhost:3000/1/payment_approved\",\r\n        \"failure\": \"http://localhost:3000/1/payment_failure\",\r\n        \"pending\": \"http://localhost:3000/1/payment_pending\"\r\n    },\r\n    \"items\": [\r\n        {\r\n            \"title\": \"Nome do produto\",\r\n            \"description\": \"Descrição do produto\",\r\n            \"quantity\": 1,\r\n            \"unit_price\": 10,\r\n            \"currency_id\": \"BRL\"\r\n        }\r\n    ],\r\n    \"payment_methods\": {\r\n        \"default_payment_method_id\": \"pix\",\r\n        \"installments\": 1,\r\n        \"default_installments\": 1\r\n    },\r\n    \"auto_return,\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1059,21 +1255,11 @@
 				{
 					"name": "payment/get_preference",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzM2NzkyNTQ5LCJleHAiOjE3MzY4Nzg5NDl9.fNIk-jXOSO34wevpeNTB5-z8dHAwDkmc_s8xxerCcMY",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"preference_id\": \"215934195-e91ed6c3-95e9-4080-8493-073c33ee522d\"\r\n}",
+							"raw": "{\r\n    \"id\": \"1336834683\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1081,13 +1267,45 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/payment/get_preference",
+							"raw": "{{base_url}}/payment/payment_status",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"payment",
-								"get_preference"
+								"payment_status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "/notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"\",\r\n    \"title\": \"\",\r\n    \"body\": \"\",\r\n    \"link\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/notification/notifyUser",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"notification",
+								"notifyUser"
 							]
 						}
 					},
