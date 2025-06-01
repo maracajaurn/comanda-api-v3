@@ -13,14 +13,14 @@ router.post("/process_payment", async (req, res) => {
     } catch (error) {
         logger.error(`Error create payment: ${error.message}`);
         res.status(500).send({ message: "Erro ao criar pagamento.", status: false });
-    }
+    };
 });
 
 router.post("/payment_status", async (req, res) => {
     const { id } = req.body;
 
     try {
-        const result = await PaymentService.getPreference(id);
+        const result = await PaymentService.getPayment(id);
 
         res.status(200).send(result);
     } catch (error) {
