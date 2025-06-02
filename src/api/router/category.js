@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
         res.status(200).send(result);
     } catch (error) {
         logger.error("Error fetching categories:", error);
-        res.status(500).send({ message: "Erro ao buscar comandas.", status: false });
+        res.status(500).send({ message: "Erro ao buscar categorias.", status: false });
     };
 });
 
@@ -57,7 +57,11 @@ router.delete("/:id", async (req, res) => {
         res.status(200).send({ message: "Categoria deletado com sucesso!", status: true });
     } catch (error) {
         logger.error("Error fetching category:", error);
-        res.status(500).send({ message: "Erro ao buscar categoria.", status: false });
+        res.status(500).send({
+            message: `Para deletar uma categoria, é necessário deletar ou alterar 
+                    a categoria de todos os produtos vinculados a ela.`,
+            status: false
+        });
     };
 });
 
