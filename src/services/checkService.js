@@ -3,7 +3,8 @@ const {
     query_delete_check_by_id, query_insert_check,
     query_update_check_by_id, query_update_close_check_by_id,
     query_select_all_where_status,
-    query_insert_check_closed, query_delete_all_check
+    query_insert_check_closed, query_update_insert_notify_id,
+    query_delete_all_check
 } = require("../repositores/query_check");
 
 class CheckService {
@@ -83,6 +84,21 @@ class CheckService {
             };
 
             const result = await query_update_close_check_by_id(pay_form, check_id);
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_inser_notify_id(notify_id, check_id) {
+        try {
+            const check_if_exists = await query_select_by_id(check_id);
+
+            if (!check_if_exists[0].check_id) {
+                return { status: 404, message: "check not found." };
+            };
+
+            const result = await query_update_insert_notify_id(notify_id, check_id);
             return result;
         } catch (error) {
             throw new Error(error.message);

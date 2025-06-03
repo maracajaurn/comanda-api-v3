@@ -181,6 +181,25 @@ const query_update_close_check_by_id = (pay_form, check_id) => {
     });
 };
 
+const query_update_insert_notify_id = (notify_id, check_id) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            UPDATE comanda_menu.check c
+            SET notify_id = ?
+            WHERE c.check_id = ?;`;
+
+        pool.query(sql, [notify_id, check_id], (err, result) => {
+            if (err) {
+
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 const query_delete_check_by_id = (check_id) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -226,6 +245,7 @@ module.exports = {
 
     query_update_check_by_id,
     query_update_close_check_by_id,
+    query_update_insert_notify_id,
     
     query_delete_check_by_id,
     query_delete_all_check,
