@@ -2,6 +2,8 @@ const router = require("express").Router();
 const logger = require("../../../logger");
 const notificationService = require("../../services/notificationService");
 
+require("dotenv").config();
+
 router.post("/notifyUser", async (req, res) => {
     const { token, title, body, link } = req.body;
 
@@ -13,16 +15,14 @@ router.post("/notifyUser", async (req, res) => {
         token,
         notification: {
             title,
-            body
+            body,
         },
         webpush: {
-            notification: {
-                icon: 'https://seu-dominio.com/logo192.png',
-                click_action: link || 'https://8a77-45-167-63-14.ngrok-free.app/produtos',
-            }
-        }
+            fcmOptions: {
+                link: link || `${process.env.URL_FRONT}/register_client`,
+            },
+        },
     };
-
 
     try {
         await notificationService.notifyUser(payload);
