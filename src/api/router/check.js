@@ -97,6 +97,18 @@ router.put("/close/:check_id", async (req, res) => {
     };
 });
 
+router.put("/insert_notify_id/:check_id", async (req, res) => {
+    const { check_id } = req.params;
+    const { notify_id } = req.body;
+    try {
+        await CheckService.service_query_inser_notify_id(notify_id, check_id);
+        res.status(200).send({ message: "Id da notificação inserido com sucesso!", status: true });
+    } catch (error) {
+        logger.error("Error fetching check:", error);
+        res.status(500).send({ message: "Erro ao atualizar comanda.", status: false });
+    };
+});
+
 router.delete("/:check_id", async (req, res) => {
     const { check_id } = req.params;
 
