@@ -227,6 +227,7 @@ const query_select_all_created_online = () => {
                 c.pay_form,
                 c.check_id,
                 c.created_for,
+                c.notify_id,
                 p.product_id,
                 p.product_name,
                 o.quantity,
