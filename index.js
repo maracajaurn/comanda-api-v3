@@ -117,6 +117,12 @@ io.on("connection", (socket) => {
         socket.data.check_canceled = data;
         socket.broadcast.emit("check_canceled", socket.data.check_canceled);
     });
+
+    // imprimir comanda
+    socket.on("print_check", (data) => {
+        socket.data.print_check = data;
+        socket.broadcast.emit("print_check", socket.data.print_check);
+    });
 });
 
 server.listen(process.env.PORT_BACK, () => {
