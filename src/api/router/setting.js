@@ -35,7 +35,15 @@ router.post("/", async (req, res) => {
 
 router.put("/:setting_id", async (req, res) => {
     const { setting_id } = req.params;
-    const { estabishment_name, serveice_change, service_change_percentage, image_pix, color } = req.body;
+    const {
+        estabishment_name,
+        serveice_change,
+        service_change_percentage,
+        image_pix,
+        color,
+        service_change_printer,
+        printer_name
+    } = req.body;
 
     let image_buffer = null;
     if (image_pix) {
@@ -44,7 +52,13 @@ router.put("/:setting_id", async (req, res) => {
     };
 
     const data = {
-        estabishment_name, serveice_change, service_change_percentage, image_buffer, color
+        estabishment_name,
+        serveice_change,
+        service_change_percentage,
+        image_buffer,
+        color,
+        service_change_printer,
+        printer_name
     };
 
     try {
