@@ -51,7 +51,9 @@ const query_update_setting_by_id = (setting_id, data) => {
                 s.serveice_change =?,
                 s.service_change_percentage =?,
                 s.image_pix =?,
-                s.color =?
+                s.color =?,
+                s.service_change_printer =?,
+                s.printer_name =?
             WHERE s.setting_id =?;`;
 
         const values = [
@@ -60,6 +62,8 @@ const query_update_setting_by_id = (setting_id, data) => {
             data.service_change_percentage,
             data.image_buffer,
             data.color,
+            data.service_change_printer,
+            data.printer_name,
             setting_id,
         ];
 
