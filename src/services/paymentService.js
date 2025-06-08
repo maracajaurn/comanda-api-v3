@@ -18,7 +18,7 @@ class PaymentService {
         const result = await payment.create({
             body: data,
             requestOptions: {
-                Options: uuidv4()
+                idempotencyKey: uuidv4()
             },
         });
 
