@@ -38,7 +38,7 @@ const query_select_by_id = (user_id) => {
 const query_select_by_email = (email) => {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT u.email
+            SELECT u.user_id, u.email
             FROM comanda_menu.user u
             WHERE u.email =?;`;
 
