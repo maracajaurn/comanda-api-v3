@@ -49,7 +49,7 @@ class UserService {
         try {
             const check_if_email_exists = await query_select_by_email(data.email);
 
-            if (check_if_email_exists?.[0]?.user_id !== user_id) {
+            if (check_if_email_exists?.[0]?.user_id !== Number(user_id)) {
                 return { status: 409, message: "email already exists." };
             };
 
