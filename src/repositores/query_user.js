@@ -35,6 +35,25 @@ const query_select_by_id = (user_id) => {
     });
 };
 
+const query_select_by_func = (func) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            SELECT u.notify_id
+            FROM comanda_menu.user u
+            WHERE u.func = ?;`;
+
+        pool.query(sql, [func], (err, result) => {
+            if (err) {
+                
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 const query_select_by_email = (email) => {
     return new Promise((resolve, reject) => {
         const sql = `
@@ -150,6 +169,7 @@ const query_insert_notify_id = (user_id, nitify_id) => {
 module.exports = {
     query_select_all,
     query_select_by_id,
+    query_select_by_func,
     query_select_by_email,
     query_update_user_by_id,
     query_insert_user,
