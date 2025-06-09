@@ -1,6 +1,6 @@
 const logger = require("../../logger");
 const {
-    query_select_all, query_select_by_id, query_select_by_email,
+    query_select_all, query_select_by_id, query_select_by_email, query_select_by_func,
     query_delete_user_by_id, query_insert_user,
     query_update_user_by_id, query_insert_notify_id,
 } = require("../repositores/query_user");
@@ -19,6 +19,18 @@ class UserService {
     async service_query_select_by_id(user_id) {
         try {
             const result = await query_select_by_id(user_id);
+            if (!result) {
+                return { status: 404, message: "user not found." };
+            };
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async service_query_select_by_func(func) {
+        try {
+            const result = await query_select_by_func(func);
             if (!result) {
                 return { status: 404, message: "user not found." };
             };

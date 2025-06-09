@@ -24,6 +24,18 @@ router.get("/:user_id", async (req, res) => {
     };
 });
 
+router.get("/get_by_func/:func", async (req, res) => {
+    const { func } = req.params;
+
+    try {
+        const result = await UserService.service_query_select_by_func(func);
+        res.status(200).send(result);
+    } catch (error) {
+        logger.error("Error fetching user:", error);
+        res.status(500).send({ message: "Erro ao buscar os usuários", status: false });
+    };
+});
+
 router.post("/", async (req, res) => {
     const { username, email, password, func } = req.body;
 
