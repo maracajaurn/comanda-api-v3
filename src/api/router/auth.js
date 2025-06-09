@@ -9,7 +9,13 @@ router.post("/login", async (req, res) => {
     try {
         const { token, user } = await AuthService.login(email, password);
 
-        return res.status(200).send({ message: "Login realizado com sucesso.", func: user.func, token: token, status: true });
+        return res.status(200).send({
+            message: "Login realizado com sucesso.",
+            func: user.func,
+            token: token,
+            user_id: user.user_id,
+            status: true
+        });
     } catch (error) {
         logger.error("Error on login:", error);
         return res.status(500).send({ message: "Erro ao realizar login.", status: false });
