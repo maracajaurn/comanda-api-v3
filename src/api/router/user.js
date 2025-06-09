@@ -53,6 +53,19 @@ router.put("/:user_id", async (req, res) => {
     };
 });
 
+router.put("/insert_notify_id/:user_id", async (req, res) => {
+    const { user_id } = req.params;
+    const { notify_id } = req.body;
+
+    try {
+        await UserService.service_query_insert_notify_id(user_id, notify_id);
+        res.status(200).send({ message: "Id de notificação inserido com sucesso", status: true });
+    } catch (error) {
+        logger.error("Error fetching user:", error);
+        res.status(500).send({ message: "Erro ao inserir o id de notificação.", status: false });
+    };
+});
+
 router.delete("/:user_id", async (req, res) => {
     const { user_id } = req.params;
 

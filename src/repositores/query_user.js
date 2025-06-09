@@ -128,6 +128,25 @@ const query_delete_user_by_id = (user_id) => {
     });
 };
 
+const query_insert_notify_id = (user_id, nitify_id) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+            UPDATE comanda_menu.user u
+            SET u.notify_id = ?
+            WHERE u.user_id = ?;`;
+
+        pool.query(sql, [nitify_id, user_id], (err, result) => {
+            if (err) {
+                
+                reject(err);
+                return;
+            };
+
+            resolve(result);
+        });
+    });
+};
+
 module.exports = {
     query_select_all,
     query_select_by_id,
@@ -135,4 +154,5 @@ module.exports = {
     query_update_user_by_id,
     query_insert_user,
     query_delete_user_by_id,
+    query_insert_notify_id,
 };
