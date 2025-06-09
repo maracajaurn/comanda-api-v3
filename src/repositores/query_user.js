@@ -38,7 +38,7 @@ const query_select_by_id = (user_id) => {
 const query_select_by_func = (func) => {
     return new Promise((resolve, reject) => {
         const sql = `
-            SELECT u.notify_id
+            SELECT u.user_id, u.notify_id
             FROM comanda_menu.user u
             WHERE u.func = ?;`;
 
