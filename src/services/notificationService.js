@@ -24,24 +24,19 @@ class NotificationService {
 
     async notifyUser(payload_list = []) {
         const promises = payload_list.map((payload) => {
-            const message = {
-                token: payload.token,
-                notification: {
-                    title: payload.title,
-                    body: payload.body,
-                },
-                webpush: {
-                    fcm_options: {
-                        link: payload.link
-                    },
-                },
-            };
-            return admin.messaging().send(message);
+            return admin.messaging().send(payload);
         });
 
-        await Promise.all(promises);
-        return { message: 'Notificações enviadas com sucesso!' };
-    }
+        const result = await Promise.allSettled(promises);
+
+        result.forEach((result, i) => {
+            if (result.status !== 'fulfilled') {
+                console.error(`Error [${i}]:`, result.reason);
+            };
+        });
+
+        return { message: 'Envio concluído', result };
+    };
 };
 
 module.exports = new NotificationService();
