@@ -5,24 +5,7 @@ const notificationService = require("../../services/notificationService");
 require("dotenv").config();
 
 router.post("/notifyUser", async (req, res) => {
-    const { token, title, body, link } = req.body;
-
-    if (!token || !title || !body) {
-        return res.status(400).json({ error: "token, title e body são obrigatórios." });
-    };
-
-    const payload = {
-        token,
-        notification: {
-            title,
-            body,
-        },
-        webpush: {
-            fcmOptions: {
-                link: link || `${process.env.URL_FRONT}/register_client`,
-            },
-        },
-    };
+    const { payload } = req.body;
 
     try {
         await notificationService.notifyUser(payload);
