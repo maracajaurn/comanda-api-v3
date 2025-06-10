@@ -5,7 +5,7 @@ const notificationService = require("../../services/notificationService");
 require("dotenv").config();
 
 router.post("/notifyUser", async (req, res) => {
-    const { payload } = req.body;
+    const payload = req.body;
 
     try {
         await notificationService.notifyUser(payload);
