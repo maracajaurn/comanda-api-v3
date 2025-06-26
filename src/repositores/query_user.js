@@ -6,7 +6,7 @@ const query_select_all = () => {
 
         pool.query(sql, (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -25,7 +25,7 @@ const query_select_by_id = (user_id) => {
 
         pool.query(sql, [user_id], (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -35,16 +35,22 @@ const query_select_by_id = (user_id) => {
     });
 };
 
-const query_select_by_func = (func) => {
+const query_select_by_func = (funcs = []) => {
     return new Promise((resolve, reject) => {
-        const sql = `
-            SELECT u.user_id, u.notify_id
-            FROM comanda_menu.user u
-            WHERE u.func = ?;`;
+        if (!Array.isArray(funcs) || funcs.length === 0) {
+            return resolve([]);
+        };
 
-        pool.query(sql, [func], (err, result) => {
+        const placeholders = funcs.map(() => '?').join(', ');
+
+        const sql = `
+            SELECT u.user_id, u.notify_id, u.func
+            FROM comanda_menu.user u
+            WHERE u.func IN (${placeholders});`;
+
+        pool.query(sql, funcs, (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -63,7 +69,7 @@ const query_select_by_email = (email) => {
 
         pool.query(sql, [email], (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -89,7 +95,7 @@ const query_insert_user = (data) => {
 
         pool.query(sql, values, (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -119,7 +125,7 @@ const query_update_user_by_id = (user_id, data) => {
 
         pool.query(sql, values, (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -137,7 +143,7 @@ const query_delete_user_by_id = (user_id) => {
 
         pool.query(sql, [user_id], (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
@@ -156,7 +162,7 @@ const query_insert_notify_id = (user_id, nitify_id) => {
 
         pool.query(sql, [nitify_id, user_id], (err, result) => {
             if (err) {
-                
+
                 reject(err);
                 return;
             };
