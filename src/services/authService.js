@@ -4,6 +4,8 @@ const {
     query_auth_verify_if_user_exists,
     query_auth_verify_if_user_exists_by_id
  } = require("../repositores/query_auth");
+
+const { service_query_insert_notify_id } = require("../services/userService");
 require('dotenv').config();
 
 class AuthService {
@@ -26,6 +28,15 @@ class AuthService {
             });
 
             return { token, user };
+        } catch (error) {
+            throw new Error(error.message);
+        };
+    };
+
+    async logout(user_id) {
+        try {
+            const result = await service_query_insert_notify_id(user_id, "");
+            return result;
         } catch (error) {
             throw new Error(error.message);
         };

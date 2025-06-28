@@ -22,6 +22,18 @@ router.post("/login", async (req, res) => {
     };
 });
 
+router.post("/logout", async (req, res) => {
+    const { user_id } = req.body;
+
+    try {
+        await AuthService.logout(user_id);
+        res.status(201).send({ message: "Até a próxima!", status: true });
+    } catch (error) {
+        logger.error("Error on login:", error);
+        return res.status(500).send({ message: "Erro ao realizar logout.", status: false });
+    };
+});
+
 router.post("/first_access", async (req, res) => {
     const { username, email, password, func } = req.body;
 
