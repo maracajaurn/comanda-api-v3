@@ -24,11 +24,11 @@ router.get("/:user_id", async (req, res) => {
     };
 });
 
-router.get("/get_by_func/:func", async (req, res) => {
-    const { func } = req.params;
+router.post("/get_by_funcs", async (req, res) => {
+    const { funcs } = req.body;
 
     try {
-        const result = await UserService.service_query_select_by_func(func);
+        const result = await UserService.service_query_select_by_func(funcs);
         res.status(200).send(result);
     } catch (error) {
         logger.error("Error fetching user:", error);

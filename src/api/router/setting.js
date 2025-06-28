@@ -17,7 +17,8 @@ router.post("/", async (req, res) => {
 
     let image_buffer = null;
     if (image_pix) {
-        image_buffer = Buffer.from(image_pix, 'base64');
+        const base64Data = image_pix.replace(/^data:image\/\w+;base64,/, "");
+        image_buffer = Buffer.from(base64Data, 'base64');
     };
 
     const data = {
@@ -47,7 +48,7 @@ router.put("/:setting_id", async (req, res) => {
 
     let image_buffer = null;
     if (image_pix) {
-        const base64Data = image_pix.replace(/^data:image\/(png|jpeg);base64,/, "");
+        const base64Data = image_pix.replace(/^data:image\/\w+;base64,/, "");
         image_buffer = Buffer.from(base64Data, 'base64');
     };
 

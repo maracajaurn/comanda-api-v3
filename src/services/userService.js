@@ -28,9 +28,9 @@ class UserService {
         };
     };
 
-    async service_query_select_by_func(func) {
+    async service_query_select_by_func(funcs) {
         try {
-            const result = await query_select_by_func(func);
+            const result = await query_select_by_func(funcs);
             if (!result) {
                 return { status: 404, message: "user not found." };
             };
