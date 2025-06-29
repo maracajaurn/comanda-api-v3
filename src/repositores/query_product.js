@@ -117,10 +117,12 @@ const query_select_by_name = (name_product) => {
         const sql = `
             SELECT 
                 p.product_id,
-                p.product_name,
-                p.stock,
+	            p.product_name,
+	            p.price,
+	            p.category_id,
+                c.name_category,
                 p.description,
-                p.price,
+                p.stock,
                 p.image
             FROM comanda_menu.product p
             JOIN comanda_menu.category c
