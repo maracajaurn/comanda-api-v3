@@ -165,8 +165,7 @@ Usa o Firebase Cloud Messaging.
 Cada usuário pode registrar um `notify_id` para receber alertas personalizados.
 
 ### 🧑‍💻 Autor
-Jackson Souza da Silva
-github.com/JackSSads
+[Jackson Souza da Silva](https://github.com/JackSSads)
 
 ## 📄 Licença
 Este projeto está licenciado sob a ISC License – veja o arquivo LICENSE para mais detalhes.
