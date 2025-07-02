@@ -27,7 +27,7 @@ Este é o servidor da aplicação **Comanda Menu**, desenvolvido em **Node.js** 
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 👷‍♂️ Configuração do Ambiente
 
 ### 1. Clone o repositório
 
