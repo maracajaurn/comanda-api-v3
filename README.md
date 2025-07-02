@@ -170,4 +170,4 @@ Integração com Mercado Pago para gerar links de pagamento e receber notificaç
 ## 📄 Licença
 Este projeto está licenciado sob a ISC License – veja o arquivo LICENSE para mais detalhes.
 
-[Link frontend do projeto](https://github.com/JackSSads/comanda-menu-v3)
+[Frontend do projeto](https://github.com/JackSSads/comanda-menu-v3)
