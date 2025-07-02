@@ -29,22 +29,24 @@ Este é o servidor da aplicação **Comanda Menu**, desenvolvido em **Node.js** 
 
 ## 👷‍♂️ Configuração do Ambiente
 
-### 1. Clone o repositório
+1. Clone o repositório
 
 ```bash
 git clone https://github.com/JackSSads/comanda-api-v3
+```
+
+2. Navegue até o diretório do projeto:
+```bash
 cd comanda-api-v3
 ```
 
-### 2. Instale as dependências
+3. Instale as dependências
 ```bash
 npm install
 ```
 
-### 3. Configure as variáveis de ambiente
-Crie um arquivo `.env` com as seguintes variáveis:
-
-```
+4. Crie um arquivo `.env` 
+```bash
 PORT_BACK=3001
 URL_FRONT=http://localhost:3000
 
@@ -76,8 +78,7 @@ CLIENT_X509_CERT_URL=
 UNIVERSE_DOMAIN=googleapis.com
 ```
 
-### 4. Inicie a API
-Modo desenvolvimento (com `nodemon`):
+5. Inicie o servidor de desenvolvimento (com `nodemon`):
 ```bash
 npm run dev
 ```
